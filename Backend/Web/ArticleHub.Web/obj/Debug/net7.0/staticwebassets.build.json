@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "kcIF8VxE1YxCJemCcdbztpqBFgJzln1ZE0jg39M2pbU=",
+  "Source": "ArticleHub.Web",
+  "BasePath": "_content/ArticleHub.Web",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,11 @@
+C:\ArticleHub\Backend\Data\ArticleHub.Data\bin\Debug\net7.0\ArticleHub.Data.deps.json
+C:\ArticleHub\Backend\Data\ArticleHub.Data\bin\Debug\net7.0\ArticleHub.Data.dll
+C:\ArticleHub\Backend\Data\ArticleHub.Data\bin\Debug\net7.0\ArticleHub.Data.pdb
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.AssemblyInfoInputs.cache
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.AssemblyInfo.cs
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.csproj.CoreCompileInputs.cache
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.dll
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\refint\ArticleHub.Data.dll
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ArticleHub.Data.pdb
+C:\ArticleHub\Backend\Data\ArticleHub.Data\obj\Debug\net7.0\ref\ArticleHub.Data.dll

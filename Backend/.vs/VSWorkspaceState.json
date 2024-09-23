@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Core",
+    "\\Core\\ArticleHub.Core",
+    "\\Data",
+    "\\Data\\ArticleHub.Data",
+    "\\Web",
+    "\\Web\\ArticleHub.Web"
+  ],
+  "PreviewInSolutionExplorer": false
+}
