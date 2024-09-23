@@ -53,10 +53,8 @@ With the vast number of online articles and research available, users often face
 ## ER Diagram
 The entity-relationship (ER) diagram provides a visual representation of the database structure, including relationships between users, articles, and interactions. 
 
-![ER Diagram]((https://github.com/user-attachments/assets/958fdf9b-089b-4529-9e75-d7dd35273447)
-)
 
-> *Note: Replace the placeholder path with the actual file path to your ER diagram image.*
+![Untitled (2)](https://github.com/user-attachments/assets/1d6d0bef-7f62-4613-b5eb-86a197379a67)
 
 ## Conclusion
 **Article Hub** offers a comprehensive yet simple platform for users to manage and engage with articles. By addressing common user pain points, the platform aims to enhance productivity, research, and content discovery in a secure and efficient manner.
