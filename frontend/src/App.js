@@ -1,8 +1,8 @@
-import AuthPage from './pages/AuthPage/AuthPage';
+import EditProfilePage from './pages/EditProfilePage/EditProfilePage.js';
 
 function App() {
   return (
-    <AuthPage/>
+    <EditProfilePage/>
   );
 }
 
