@@ -1,0 +1,37 @@
+.article-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+  }
+  
+  .article-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .article-image {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+  }
+  
+  .article-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .article-content {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .btn-link {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .btn-link:hover {
+    text-decoration: underline;
+  }
+  
