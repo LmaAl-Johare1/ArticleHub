@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj": {}
+    "C:\\ArticleHub\\backend\\src\\Web\\Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj": {
+    "C:\\ArticleHub\\backend\\src\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\ArticleHub\\backend\\src\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\obj\\",
+        "projectPath": "C:\\ArticleHub\\backend\\src\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\Lma Al Johare\\.nuget\\packages\\",
+        "outputPath": "C:\\ArticleHub\\backend\\src\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lma Al Johare\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj": {
-                "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj"
+              "C:\\ArticleHub\\backend\\src\\Data\\Data.csproj": {
+                "projectPath": "C:\\ArticleHub\\backend\\src\\Data\\Data.csproj"
               }
             }
           }
@@ -62,7 +64,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -71,24 +74,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj": {
+    "C:\\ArticleHub\\backend\\src\\Data\\Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj",
+        "projectUniqueName": "C:\\ArticleHub\\backend\\src\\Data\\Data.csproj",
         "projectName": "Data",
-        "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\obj\\",
+        "projectPath": "C:\\ArticleHub\\backend\\src\\Data\\Data.csproj",
+        "packagesPath": "C:\\Users\\Lma Al Johare\\.nuget\\packages\\",
+        "outputPath": "C:\\ArticleHub\\backend\\src\\Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lma Al Johare\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -96,6 +100,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -123,6 +128,12 @@
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[5.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.0, )"
             }
           },
           "imports": [
@@ -131,7 +142,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -140,24 +152,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj": {
+    "C:\\ArticleHub\\backend\\src\\Web\\Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj",
+        "projectUniqueName": "C:\\ArticleHub\\backend\\src\\Web\\Web.csproj",
         "projectName": "Web",
-        "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj",
-        "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\obj\\",
+        "projectPath": "C:\\ArticleHub\\backend\\src\\Web\\Web.csproj",
+        "packagesPath": "C:\\Users\\Lma Al Johare\\.nuget\\packages\\",
+        "outputPath": "C:\\ArticleHub\\backend\\src\\Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\hp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Lma Al Johare\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -165,14 +178,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj": {
-                "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj"
+              "C:\\ArticleHub\\backend\\src\\Core\\Core.csproj": {
+                "projectPath": "C:\\ArticleHub\\backend\\src\\Core\\Core.csproj"
               }
             }
           }
@@ -200,7 +214,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -212,7 +227,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
