@@ -14,8 +14,8 @@ namespace Core.Profiles
 
             CreateMap<Article, ArticleDto>()
                 .ForMember(dest => dest.tags, opt => opt.MapFrom(src => src.article_tags.Select(at => at.tag.name).ToList()))
-                .ForMember(dest => dest.user_first_name, opt => opt.MapFrom(src => src.user.first_name)) // Map user first name
-                .ForMember(dest => dest.user_last_name, opt => opt.MapFrom(src => src.user.last_name)); // Map user last name
+                .ForMember(dest => dest.user_first_name, opt => opt.MapFrom(src => src.user.first_name)) 
+                .ForMember(dest => dest.user_last_name, opt => opt.MapFrom(src => src.user.last_name)); 
         }
     }
     

@@ -10,6 +10,7 @@ namespace Data.Repositories
     {
         Task AddAsync(Article article);
         Task<int> SaveChangesAsync();
+        void Update(Article article);
         Task<Article> GetArticleByIdAsync(int articleId);
 
     }

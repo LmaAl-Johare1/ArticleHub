@@ -21,6 +21,10 @@ namespace Data.Repositories
         {
             return await _context.SaveChangesAsync();
         }
+        public void Update(Article article)
+        {
+            _context.article.Update(article);
+        }
         public async Task<Article> GetArticleByIdAsync(int articleId)
         {
             return await _context.article

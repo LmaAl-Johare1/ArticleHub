@@ -26,16 +26,21 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateArticle([FromForm] ArticleForCreationDto articleForCreationDto)
         {
-            var username = GetUsername();
-            if (string.IsNullOrEmpty(username))
+            var usernameResult = GetUsernameOrUnauthorized();
+            if (usernameResult is UnauthorizedResult)
             {
-                return Unauthorized(); 
+                return usernameResult;
             }
 
+            var username = (string)((OkObjectResult)usernameResult).Value;
 
             try
             {
                 var result = await _articleService.CreateArticleAsync(articleForCreationDto, username);
+                if (result == null)
+                {
+                    return BadRequest("Failed to create article.");
+                }
                 return CreatedAtAction(nameof(CreateArticle), new { title = result.title }, result);
             }
             catch (Exception ex)
@@ -43,16 +48,46 @@ namespace Web.Controllers
                 LogError(ex, articleForCreationDto.title);
                 return StatusCode(500, "Internal server error.");
             }
+
         }
 
-        private string GetUsername()
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditArticle(int id, [FromForm] ArticleForUpdateDto articleForUpdateDto)
         {
-            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var usernameResult = GetUsernameOrUnauthorized();
+            if (usernameResult is UnauthorizedResult)
+            {
+                return usernameResult;
+            }
+
+            var username = (string)((OkObjectResult)usernameResult).Value;
+
+            try
+            {
+                var result = await _articleService.EditArticleAsync(id, articleForUpdateDto, username);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, $"Error editing article: {id}");
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        private void LogError(Exception ex, string title)
+        private IActionResult GetUsernameOrUnauthorized()
         {
-            _logger.LogError(ex, "Error creating article: {Title}", title);
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(username))
+            {
+                return Unauthorized();
+            }
+
+            return Ok(username); 
+        }
+
+        private void LogError(Exception ex, string message)
+        {
+            _logger.LogError(ex, message);
         }
     }
 }

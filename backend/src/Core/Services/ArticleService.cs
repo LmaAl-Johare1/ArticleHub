@@ -37,12 +37,25 @@ namespace Core.Services
         {
             var user = await GetUserAsync(username);
             var article = MapToArticle(articleForCreationDto, user);
-
             await HandleImageAsync(articleForCreationDto.image, article);
             await HandleTagsAsync(articleForCreationDto.tags, article);
-
             await SaveArticleAsync(article);
+
             return await GetArticleDtoAsync(article.id);
+        }
+
+        public async Task<ArticleDto> EditArticleAsync(int articleId, ArticleForUpdateDto articleForUpdateDto, string username)
+        {
+            var user = await GetUserAsync(username);
+            var existingArticle = await GetExistingArticleAsync(articleId);
+
+
+            UpdateArticleProperties(existingArticle, articleForUpdateDto);
+            await HandleImageAsync(articleForUpdateDto.image, existingArticle);
+            await UpdateTagsAsync(articleForUpdateDto.tags, existingArticle);
+             _articleRepository.Update(existingArticle);
+            await SaveChangesAsync();
+            return _mapper.Map<ArticleDto>(existingArticle);
         }
 
         private async Task<User> GetUserAsync(string username)
@@ -56,6 +69,8 @@ namespace Core.Services
             var article = _mapper.Map<Article>(articleForCreationDto);
             article.user_id = user.id;
             article.slug = GenerateSlug(article.title, article.id);
+            article.created = DateTime.UtcNow;
+
             return article;
         }
 
@@ -72,7 +87,12 @@ namespace Core.Services
             {
                 article.image = await _fileService.SaveFileAsync(imageFile);
             }
+            else
+            {
+                throw new Exception("Image file is required.");
+            }
         }
+
 
         private async Task HandleTagsAsync(List<string> tags, Article article)
         {
@@ -81,10 +101,7 @@ namespace Core.Services
                 var tagsFromDb = await _tagRepository.GetTagsByNamesAsync(tags);
                 if (tagsFromDb != null && tagsFromDb.Any())
                 {
-                    foreach (var tag in tagsFromDb)
-                    {
-                        article.article_tags.Add(CreateArticleTag(article, tag));
-                    }
+                    article.article_tags.AddRange(tagsFromDb.Select(tag => CreateArticleTag(article, tag)));
                 }
             }
         }
@@ -103,31 +120,71 @@ namespace Core.Services
         private async Task SaveArticleAsync(Article article)
         {
             await _articleRepository.AddAsync(article);
-
-            try
-            {
-                await _articleRepository.SaveChangesAsync();
-            }
-            catch (DbUpdateException dbEx)
-            {
-                Console.WriteLine($"Database Update Error: {dbEx.Message}");
-                if (dbEx.InnerException != null)
-                {
-                    Console.WriteLine($"Inner Exception: {dbEx.InnerException.Message}");
-                }
-                throw; 
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"General Error: {ex.Message}");
-                throw; 
-            }
+            await SaveChangesAsync();
         }
 
         private async Task<ArticleDto> GetArticleDtoAsync(int articleId)
         {
             var savedArticle = await _articleRepository.GetArticleByIdAsync(articleId);
             return _mapper.Map<ArticleDto>(savedArticle);
+        }
+
+        private async Task<Article> GetExistingArticleAsync(int articleId)
+        {
+            return await _articleRepository.GetArticleByIdAsync(articleId)
+                   ?? throw new Exception("Article does not exist.");
+        }
+
+
+
+        private void UpdateArticleProperties(Article existingArticle, ArticleForUpdateDto articleForUpdateDto)
+        {
+            existingArticle.title = articleForUpdateDto.title;
+            existingArticle.body = articleForUpdateDto.body;
+            existingArticle.updated = DateTime.UtcNow;
+        }
+
+        private async Task UpdateTagsAsync(List<string> tags, Article existingArticle)
+        {
+            existingArticle.article_tags.Clear();
+
+            if (tags != null && tags.Any())
+            {
+                var tagsFromDb = await _tagRepository.GetTagsByNamesAsync(tags);
+                existingArticle.article_tags.AddRange(tagsFromDb.Select(tag => CreateArticleTag(existingArticle, tag)));
+            }
+        }
+
+        private async Task SaveChangesAsync()
+        {
+            try
+            {
+                await _articleRepository.SaveChangesAsync();
+            }
+            catch (DbUpdateException dbEx)
+            {
+                HandleDbUpdateException(dbEx);
+            }
+            catch (Exception ex)
+            {
+                HandleGeneralException(ex);
+            }
+        }
+
+        private void HandleDbUpdateException(DbUpdateException dbEx)
+        {
+            Console.WriteLine($"Database Update Error: {dbEx.Message}");
+            if (dbEx.InnerException != null)
+            {
+                Console.WriteLine($"Inner Exception: {dbEx.InnerException.Message}");
+            }
+
+        }
+
+        private void HandleGeneralException(Exception ex)
+        {
+            Console.WriteLine($"General Error: {ex.Message}");
+
         }
     }
 }
