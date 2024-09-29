@@ -5755,11 +5755,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Data\\Data.csproj",
       "projectName": "Data",
-      "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\Data.csproj",
+      "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Data\\Data.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Data\\obj\\",
+      "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

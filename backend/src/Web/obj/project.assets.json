@@ -5966,11 +5966,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj",
+      "projectUniqueName": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Web\\Web.csproj",
       "projectName": "Web",
-      "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj",
+      "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Web\\Web.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\obj\\",
+      "outputPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -5990,8 +5990,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Core\\Core.csproj"
+            "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Core\\Core.csproj"
             }
           }
         }

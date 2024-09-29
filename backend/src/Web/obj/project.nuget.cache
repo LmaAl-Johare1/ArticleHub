@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dFJtBS2i3pZJYjK6K1bSED/tkY7z5Y0nnxn0KKuNhdSeeWPr2+s/AXXJOHj2KVDN1dEmbvk3UwgLalqPaKZh8g==",
+  "dgSpecHash": "jIyH+Ju8w7ofkzlIz8z/sjnDh3wnO7sWn1q+WafFzdXxtT6CDbjXRpBr78udBJYxlS3tHVO04RKXYi5pORw5ww==",
   "success": true,
-  "projectFilePath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\src\\Web\\Web.csproj",
+  "projectFilePath": "C:\\Users\\hp\\Desktop\\ArticleHub\\ArticleHub\\backend\\src\\Web\\Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

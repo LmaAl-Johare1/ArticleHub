@@ -28,13 +28,13 @@ namespace Web.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(UserLoginDto userLogin)
         {
-            var token = await _IUserService.LoginUserAsync(userLogin);
-            if (token == null)
+            var userDto = await _IUserService.LoginUserAsync(userLogin);
+            if (userDto == null)
             {
                 return Unauthorized(new { msg = "The email or the password is wrong" } );
             }
 
-            return Ok(new { token = token });
+            return Ok(userDto);
         }
 
         [AllowAnonymous]
@@ -44,17 +44,17 @@ namespace Web.Controllers
             var emailNotAvailable = await _IUserService.EmailAvailableAsync(userForCreation.email);
             if (emailNotAvailable)
             {
-                return NotFound("email Not Available");
+                return NotFound(new { message = "email is exist" });
             }
 
             var userExists = await _IUserService.UserExistsAsync(userForCreation.username);
             if (userExists)
             {
-                return NotFound("user Exists");
+                return NotFound(new { message = "username is exist" } );
             }
 
-            var token = await _IUserService.CreateUserAsync(userForCreation);
-            return Ok(new {token = token});
+            var userDto = await _IUserService.CreateUserAsync(userForCreation);
+            return Ok(userDto);
         }
     }
 }

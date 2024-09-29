@@ -30,7 +30,7 @@ namespace Core.Services
             _mapper = mapper;
         }
 
-        public async Task<string> LoginUserAsync(UserLoginDto userLogin)
+        public async Task<UserDto> LoginUserAsync(UserLoginDto userLogin)
         {
             userLogin.email = userLogin.email.ToLower();
             userLogin.password = userLogin.password.GetHash();
@@ -42,17 +42,21 @@ namespace Core.Services
                 return null;
             }
 
-            var token = _IAuthentication.Generate(userlogedin);
-            return token;
+            var userDto = new UserDto
+            {
+                token = _IAuthentication.Generate(userlogedin),
+                username = userlogedin.username
+            };
+            return userDto;
         }
 
-        public async Task<UserDto> GetCurrentUserAsync()
+        public async Task<UserProfileDto> GetCurrentUserAsync()
         {
             var currentUsername = _accessor?.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (!String.IsNullOrEmpty(currentUsername))
             {
                 var currentUser = await _IUserRepository.GetUserAsNoTrackingAsync(currentUsername);
-                var userToReturn = _mapper.Map<UserDto>(currentUser);
+                var userToReturn = _mapper.Map<UserProfileDto>(currentUser);
                 return userToReturn;
             }
 
@@ -71,7 +75,7 @@ namespace Core.Services
             return -1;
         }
 
-        public async Task<string> CreateUserAsync(UserForCreationDto userForCreation)
+        public async Task<UserDto> CreateUserAsync(UserForCreationDto userForCreation)
         {
             userForCreation.username = userForCreation.username.ToLower();
             userForCreation.email = userForCreation.email.ToLower();
@@ -84,9 +88,13 @@ namespace Core.Services
 
             await _IUserRepository.CreateUserAsync(userEntityForCreation);
             await _IUserRepository.SaveChangesAsync();
+            var userDto = new UserDto
+            {
+                token = _IAuthentication.Generate(userEntityForCreation),
+                username = userEntityForCreation.username
+            };
 
-            var token = _IAuthentication.Generate(userEntityForCreation);
-            return token;
+            return userDto;
         }
 
         public async Task<bool> EmailAvailableAsync(string email)
