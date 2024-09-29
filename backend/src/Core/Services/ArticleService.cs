@@ -43,7 +43,19 @@ namespace Core.Services
 
             return await GetArticleDtoAsync(article.id);
         }
+        public async Task<ArticleDto> GetArticleByIdAsync(int articleId)
+        {
+            var article = await _articleRepository.GetArticleByIdAsync(articleId);
 
+            if (article == null)
+            {
+                throw new Exception("Article not found.");
+            }
+
+            var articleDto = _mapper.Map<ArticleDto>(article);
+
+            return articleDto;
+        }
         public async Task<ArticleDto> EditArticleAsync(int articleId, ArticleForUpdateDto articleForUpdateDto, string username)
         {
             var user = await GetUserAsync(username);
@@ -55,7 +67,8 @@ namespace Core.Services
             await UpdateTagsAsync(articleForUpdateDto.tags, existingArticle);
              _articleRepository.Update(existingArticle);
             await SaveChangesAsync();
-            return _mapper.Map<ArticleDto>(existingArticle);
+             var articleDto = _mapper.Map<ArticleDto>(existingArticle);;
+            return (articleDto);
         }
 
         private async Task<User> GetUserAsync(string username)
@@ -186,5 +199,7 @@ namespace Core.Services
             Console.WriteLine($"General Error: {ex.Message}");
 
         }
+        
+
     }
 }

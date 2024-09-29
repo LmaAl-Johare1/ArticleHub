@@ -73,7 +73,20 @@ namespace Web.Controllers
                 return StatusCode(500, "Internal server error.");
             }
         }
-
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetArticle(int id)
+        {
+            try
+            {
+                var articleDto = await _articleService.GetArticleByIdAsync(id);
+                return Ok(articleDto);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, $"Error fetching article: {id}");
+                return NotFound();
+            }
+        }
         private IActionResult GetUsernameOrUnauthorized()
         {
             var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -89,5 +102,7 @@ namespace Web.Controllers
         {
             _logger.LogError(ex, message);
         }
+
+       
     }
 }
