@@ -1,35 +1,41 @@
-import React, { useState } from 'react';
-import './Pagination.css'; // Import custom CSS for styling
+import React from 'react';
+import './Pagination.css';
 
-const Pagination = () => {
-  // Static data for current page and total pages
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5; // Set total pages statically for now
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      onPageChange(currentPage + 1);
+    }
+  };
 
-  const pageNumbers = [];
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
-  }
-
-  // Static page change function
-  const handlePageChange = (number) => {
-    setCurrentPage(number);
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      onPageChange(currentPage - 1);
+    }
   };
 
   return (
     <div className="pagination-container">
-      {pageNumbers.map((number) => (
+      <button
+        className="pagination-btn"
+        onClick={handlePreviousPage}
+        disabled={currentPage === 1}
+      >
+        &laquo;
+      </button>
+      {[...Array(totalPages)].map((_, index) => (
         <button
-          key={number}
-          className={`pagination-btn ${number === currentPage ? 'active' : ''}`}
-          onClick={() => handlePageChange(number)}
+          key={index + 1}
+          className={`pagination-btn ${index + 1 === currentPage ? 'active' : ''}`}
+          onClick={() => onPageChange(index + 1)}
         >
-          {number}
+          {index + 1}
         </button>
       ))}
       <button
         className="pagination-btn"
-        onClick={() => handlePageChange(currentPage + 1 <= totalPages ? currentPage + 1 : totalPages)}
+        onClick={handleNextPage}
+        disabled={currentPage === totalPages}
       >
         &raquo;
       </button>
