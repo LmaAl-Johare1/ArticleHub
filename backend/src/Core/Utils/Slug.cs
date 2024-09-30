@@ -7,7 +7,7 @@ namespace Core.Utils
 {
     public static class Slug
     {
-        public static string GenerateSlug(this string slug, string phrase, Guid Id)
+        public static string GenerateSlug(this string slug, string phrase, int Id)
         {
             if (phrase is null)
             {

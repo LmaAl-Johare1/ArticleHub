@@ -9,7 +9,7 @@ namespace Core.Models
     {
         public string title { get; set; }
         public string body { get; set; }
-        public IFormFile image { get; set; }
+        public string image { get; set; }
         public string user_first_name { get; set; }
         public string user_last_name { get; set; }
         public DateTime created { get; set; }
@@ -18,9 +18,3 @@ namespace Core.Models
         public List<ArticleCommentDto> comments { get; set; }
     }
 }
-
-//the favarate article 
-//tags no need we can store them in the front end 
-//articles
-//the home api is the same as the search api 
-//the parameter for the article as a variables

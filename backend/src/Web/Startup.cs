@@ -1,6 +1,9 @@
 using Core.Authentication;
+using Core.IServices;
+using Core.Profiles;
 using Core.Services;
 using Data.DbContexts;
+using Data.IRepositories;
 using Data.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -11,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -84,14 +88,25 @@ namespace Web
 
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IArticleService, ArticleService>();
-
+            services.AddScoped<IFileService, FileService>();
+            services.AddAutoMapper(typeof(Startup));
             services.AddScoped<IAuthentication, Authentication>();
+            services.AddScoped<ITagRepository, TagRepository>();
 
             services.AddHttpContextAccessor();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(ArticleProfile));
 
             services.AddRazorPages();
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.AddConsole();
+                loggingBuilder.AddDebug();
+                loggingBuilder.AddEventSourceLogger();
+                // Other logging providers can be added here
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

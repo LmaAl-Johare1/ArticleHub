@@ -11,3 +11,16 @@ C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Data\bin\Debug\netcoreapp3.1\Data.
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Data\obj\Debug\netcoreapp3.1\Data.dll
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Data\obj\Debug\netcoreapp3.1\Data.pdb
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Data\obj\Debug\netcoreapp3.1\Data.genruntimeconfig.cache
+C:\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.deps.json
+C:\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.json
+C:\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.dev.json
+C:\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.dll
+C:\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.pdb
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.AssemblyReference.cache
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfoInputs.cache
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfo.cs
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.CoreCompileInputs.cache
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.dll
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.pdb
+C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.genruntimeconfig.cache
