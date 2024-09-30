@@ -1,0 +1,36 @@
+/* Pagination.css */
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Add space between pagination buttons */
+  }
+  
+  .pagination-btn {
+    background-color: #e0e0e0;
+    border: none;
+    color: black;
+    padding: 10px;
+    border-radius: 50%; /* Make the buttons circular */
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .pagination-btn:hover {
+    background-color: #ccc;
+  }
+  
+  .pagination-btn.active {
+    background-color: #333;
+    color: white;
+  }
+  
+  .pagination-btn:focus {
+    outline: none;
+  }
+  
