@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./Registration.module.css";
+<script src="../services/authService.js"></script>
 
 function Registration() {
-const [registerInfo, setRegisterInfo] = useState({
-    firstName: '',
-    lastName: '',
-    userName: '',
-    email: '',
-    password: '',
-  });
+// const [registerInfo, setRegisterInfo] = useState({
+//     firstName: '',
+//     lastName: '',
+//     userName: '',
+//     email: '',
+//     password: '',
+//   });
 
-const handleRegisterChange = (e) => {
-    setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value });
-  };
+// const handleRegisterChange = (e) => {
+//     setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value });
+//   };
 
 
-const handleRegisterSubmit = () => {
-    console.log('Register Info:', registerInfo);
-  };
+// const handleRegisterSubmit = () => {
+//     console.log('Register Info:', registerInfo);
+//   };
 
 return(
 
@@ -28,6 +29,7 @@ return(
           <div className="row">
             <div className="col">
               <input
+                id="register-fname-input"
                 type="text"
                 placeholder="First Name"
                 name="firstName"
@@ -38,6 +40,7 @@ return(
             </div>
             <div className="col">
               <input
+                id="register-lname-input"
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
@@ -48,6 +51,7 @@ return(
             </div>
           </div>
           <input
+            id="register-username-input"
             type="text"
             placeholder="User Name"
             name="userName"
@@ -56,6 +60,7 @@ return(
             className="form-control mb-3"
           />
           <input
+            id="register-email-input"
             type="email"
             placeholder="Email"
             name="email"
@@ -64,6 +69,7 @@ return(
             className="form-control mb-3"
           />
           <input
+            id="register-password-input"
             type="password"
             placeholder="Password"
             name="password"
@@ -72,7 +78,7 @@ return(
             onChange={handleRegisterChange}
             className="form-control mb-3"
           />
-          <button className="btn btn-success w-100" onClick={handleRegisterSubmit}>
+          <button className="btn btn-success w-100" onClick="registerBtnClicked()">
             Sign Up
           </button>
         </div>
