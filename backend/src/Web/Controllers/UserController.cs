@@ -26,7 +26,7 @@ namespace Web.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public async Task<ActionResult<UserDto>> Login(UserLoginDto userLogin)
+        public async Task<ActionResult<UserProfileDto>> Login(UserLoginDto userLogin)
         {
             var token = await _IUserService.LoginUserAsync(userLogin);
             if (token == null)
@@ -39,7 +39,7 @@ namespace Web.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser(UserForCreationDto userForCreation)
+        public async Task<ActionResult<UserProfileDto>> CreateUser(UserForCreationDto userForCreation)
         {
             var emailNotAvailable = await _IUserService.EmailAvailableAsync(userForCreation.email);
             if (emailNotAvailable)
@@ -55,6 +55,42 @@ namespace Web.Controllers
 
             var token = await _IUserService.CreateUserAsync(userForCreation);
             return Ok(new {token = token});
+        }
+
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserProfileDto>> GetUserProfile(string username)
+        {
+            var profileToReturn = await _IUserService.GetProfileAsync(username);
+            if (profileToReturn == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { profile = profileToReturn });
+        }
+
+        [HttpPost("{username}/follow")]
+        public async Task<ActionResult> FollowUser(string username)
+        {
+            var followedProfileToReturn = await _IUserService.FollowUserAsync(username);
+            if (!followedProfileToReturn)
+            {
+                return NotFound();
+            }
+
+            return new ObjectResult(new { profile = followedProfileToReturn }) { StatusCode = StatusCodes.Status201Created };
+        }
+
+        [HttpDelete("{username}/follow")]
+        public async Task<ActionResult> UnFollowUser(string username)
+        {
+            var unFollowedProfileToReturn = await _IUserService.UnFollowUserAsync(username);
+            if (!unFollowedProfileToReturn)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { profile = unFollowedProfileToReturn });
         }
     }
 }

@@ -11,3 +11,16 @@ C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Core\bin\Debug\netcoreapp3.1\Data.
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CopyComplete
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Core\obj\Debug\netcoreapp3.1\Core.dll
 C:\Users\hp\Desktop\ArticleHub\ArticleHub\src\Core\obj\Debug\netcoreapp3.1\Core.pdb
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.AssemblyReference.cache
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.dll
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.pdb
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.dll
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.pdb
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\hp\Desktop\ArticleHub\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CopyComplete

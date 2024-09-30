@@ -9,7 +9,7 @@ namespace Core.Models
     {
         public string title { get; set; }
         public string body { get; set; }
-        public IFormFile image { get; set; }
+        public string image { get; set; }
         public int likes_count { get; set; }
     }
 }

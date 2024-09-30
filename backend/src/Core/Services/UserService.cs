@@ -46,13 +46,13 @@ namespace Core.Services
             return token;
         }
 
-        public async Task<UserDto> GetCurrentUserAsync()
+        public async Task<UserProfileDto> GetCurrentUserAsync()
         {
             var currentUsername = _accessor?.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (!String.IsNullOrEmpty(currentUsername))
             {
                 var currentUser = await _IUserRepository.GetUserAsNoTrackingAsync(currentUsername);
-                var userToReturn = _mapper.Map<UserDto>(currentUser);
+                var userToReturn = _mapper.Map<UserProfileDto>(currentUser);
                 return userToReturn;
             }
 
@@ -99,6 +99,87 @@ namespace Core.Services
         {
             var userExists = await _IUserRepository.UserExistsAsync(username);
             return userExists;
+        }
+        public async Task<UserProfileDto> GetProfileAsync(string username)
+        {
+            username = username.ToLower();
+
+            var user = await _IUserRepository.GetUserAsync(username);
+            if (user == null)
+            {
+                return null;
+            }
+
+            var currentUserId = await GetCurrentUserIdAsync();
+
+            var profileToReturn = _mapper.Map<UserProfileDto>(user, a => a.Items["currentUserId"] = currentUserId);
+
+            var articlesDto = new List<ArticleCardDto>();
+            foreach (var article in user.user_articles)
+            {
+                var articleToReturn = _mapper.Map<ArticleCardDto>(article, a => a.Items["currentUserId"] = currentUserId);
+
+                articlesDto.Add(articleToReturn);
+            }
+
+            profileToReturn.articles = articlesDto;
+            return profileToReturn;
+        }
+
+        public async Task<bool> FollowUserAsync(string username)
+        {
+            username = username.ToLower();
+
+            var currentUser = await GetCurrentUserAsync();
+            var currentUserId = await GetCurrentUserIdAsync();
+            if (currentUser.username == username)
+            {
+                return false;
+            }
+
+            var userToFollow = await _IUserRepository.GetUserAsync(username);
+            if (userToFollow == null)
+            {
+                return false;
+            }
+
+            bool isFollowed = await _IUserRepository.IsFollowedAsync(currentUserId, userToFollow.id);
+            if (isFollowed)
+            {
+                return false;
+            }
+
+            await _IUserRepository.FollowUserAsync(currentUserId, userToFollow.id);
+            await _IUserRepository.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UnFollowUserAsync(string username)
+        {
+            username = username.ToLower();
+
+            var currentUser = await GetCurrentUserAsync();
+            var currentUserId = await GetCurrentUserIdAsync();
+            if (currentUser.username == username)
+            {
+                return false;
+            }
+
+            var userToUnfollow = await _IUserRepository.GetUserAsNoTrackingAsync(username);
+            if (userToUnfollow == null)
+            {
+                return false;
+            }
+
+            bool isFollowed = await _IUserRepository.IsFollowedAsync(currentUserId, userToUnfollow.id);
+            if (!isFollowed)
+            {
+                return false;
+            }
+
+            _IUserRepository.UnfollowUser(currentUserId, userToUnfollow.id);
+            await _IUserRepository.SaveChangesAsync();
+            return true;
         }
     }
 }

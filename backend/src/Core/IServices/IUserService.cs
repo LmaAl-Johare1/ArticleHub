@@ -12,7 +12,10 @@ namespace Core.Services
         Task<bool> UserExistsAsync(string username);
         Task<string> LoginUserAsync(UserLoginDto userLogin);
         Task<string> CreateUserAsync(UserForCreationDto userForCreation);
-        Task<UserDto> GetCurrentUserAsync();
+        Task<UserProfileDto> GetCurrentUserAsync();
         Task<int> GetCurrentUserIdAsync();
+        Task<UserProfileDto> GetProfileAsync(string username);
+        Task<bool> FollowUserAsync(string username);
+        Task<bool> UnFollowUserAsync(string username);
     }
 }

@@ -29,6 +29,20 @@ namespace Data.Repositories
             return userExists;
         }
 
+        public async Task<User> GetUserAsync(string username)
+        {
+            if (String.IsNullOrEmpty(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
+
+            var user = await _context.user.Include(u => u.user_articles)
+                                           .Include(u => u.user_followings)
+                                           .Include(u => u.user_followers)
+                                           .Include(u=>u.user_likes)
+                                           .FirstOrDefaultAsync(u => u.username == username);
+            return user;
+        }
         public async Task<User> GetUserAsNoTrackingAsync(string username)
         {
             if (String.IsNullOrEmpty(username))
@@ -56,6 +70,24 @@ namespace Data.Repositories
         {
             var emailNotAvailable = await _context.user.Select(a => a.email).ContainsAsync(email);
             return emailNotAvailable;
+        }
+        public async Task FollowUserAsync(int currentUserId, int userToFollowId)
+        {
+            var userFollower =
+                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToFollowId };
+            await _context.user_follower.AddAsync(userFollower);
+        }
+        public void UnfollowUser(int currentUserId, int userToUnfollowId)
+        {
+            var userFollower =
+                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToUnfollowId };
+            _context.user_follower.Remove(userFollower);
+        }
+        public async Task<bool> IsFollowedAsync(int FollowerId, int FolloweingId)
+        {
+            bool isFollowed =
+               await _context.user_follower.AnyAsync(uf => uf.User_follower_id == FollowerId && uf.user_followeing_id == FolloweingId);
+            return isFollowed;
         }
         public async Task SaveChangesAsync()
         {
