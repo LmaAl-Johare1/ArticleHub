@@ -1,0 +1,17 @@
+
+.UserInfo button{
+
+    border: 2px solid #2c3b4c;
+    border-radius: 10%;
+    background-color: white;
+    color: #2c3b4c;
+
+}
+
+.UserInfo  button:hover {
+    background-color: #5d6f89;
+    color: white;
+    border: 2px solid #2c3b4c;
+    transition-duration: 0.4s;
+
+  }
