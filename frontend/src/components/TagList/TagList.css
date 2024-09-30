@@ -1,0 +1,45 @@
+.taglist-container {
+  margin: 10px 0;
+}
+
+.tags .tag-btn {
+  margin-right: 10px;
+  padding: 5px 20px;
+  background-color: #e0e0e0;
+  color: #000000;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-bottom: 5px; /* Space between tags on smaller screens */
+  transition: background-color 0.3s ease;
+}
+
+/* Style for active tag */
+.tags .tag-btn.active-tag {
+  background-color: #2c3b4c; /* Selected tag color */
+  color: #fff;
+}
+
+.tags .tag-btn:hover {
+  background-color: #c0c0c0; /* Hover effect for unselected tags */
+}
+
+.create-article-btn {
+  padding: 5px 20px;
+  background-color: #5d6f89;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+}
+
+/* Media queries for smaller screen sizes */
+@media (max-width: 768px) {
+  .taglist-container {
+    flex-direction: column; /* Stack the buttons and create article button */
+  }
+
+  .create-article-btn {
+    margin-top: 10px;
+    width: 100%; /* Full width on smaller screens */
+  }
+}
