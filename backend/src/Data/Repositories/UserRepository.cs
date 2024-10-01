@@ -73,8 +73,9 @@ namespace Data.Repositories
         }
         public async Task FollowUserAsync(int currentUserId, int userToFollowId)
         {
+            var timestamp = DateTime.UtcNow;
             var userFollower =
-                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToFollowId };
+                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToFollowId, created = timestamp, updated = timestamp };
             await _context.user_follower.AddAsync(userFollower);
         }
         public void UnfollowUser(int currentUserId, int userToUnfollowId)

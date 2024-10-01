@@ -22,7 +22,7 @@ namespace Core.Profiles
                  .ForMember(
                    dest => dest.articles_count,
                    opt => opt.MapFrom(src => src.user_articles.Count()))
-                  .ForMember(
+                 .ForMember(
                     dest => dest.is_following,
                     opt => opt.MapFrom((src, dest, destMember, context) => src.user_followings.Select(s => s.User_follower_id).ToList()
                               .Contains((int)context.Items["currentUserId"])));

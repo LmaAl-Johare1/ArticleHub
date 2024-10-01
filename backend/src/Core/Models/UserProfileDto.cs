@@ -14,7 +14,7 @@ namespace Core.Models
         public string followers_count { get; set; }
         public string followings_count { get; set; }
         public string articles_count { get; set; }
-        public string is_following { get; set; }
+        public bool is_following { get; set; }
         public List<ArticleCardDto> articles { get; set; }
     }
 }

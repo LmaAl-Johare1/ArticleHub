@@ -52,7 +52,7 @@ namespace Core.Services
             if (!String.IsNullOrEmpty(currentUsername))
             {
                 var currentUser = await _IUserRepository.GetUserAsNoTrackingAsync(currentUsername);
-                var userToReturn = _mapper.Map<UserProfileDto>(currentUser);
+                var userToReturn = _mapper.Map<UserProfileDto>(currentUser, a => a.Items["currentUserId"] = currentUser.id);
                 return userToReturn;
             }
 
