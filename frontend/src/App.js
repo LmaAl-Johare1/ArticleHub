@@ -3,11 +3,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage/HomePage';
 import ArticlePage from './pages/ArticleDetailPage/ArticleDetailsPage'
-import AuthPage from './pages/AuthPage/AuthPage'
+import ProfilePage from './pages/ProfilePage/ProfilePage'
 
 function App() {
   return (
-  <AuthPage/>
+  <ProfilePage/>
   );
 }
 
