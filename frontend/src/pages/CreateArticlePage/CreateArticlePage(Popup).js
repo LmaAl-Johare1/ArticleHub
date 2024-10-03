@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import CreateArticleButton from '../../components/CreateArticleButton/CreateArticleButton';
 
 const ArticleModal = ({ show, handleClose }) => {
   const availableTags = [

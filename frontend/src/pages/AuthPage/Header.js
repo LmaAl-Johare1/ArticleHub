@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./Header.module.css";
 import Logo from "./Logo.png"
-<script src="../services/authService.js"></script>
+<script src="../../services/authService.js"></script>
 
 function Header() {
   
@@ -30,8 +30,6 @@ return (
                 id="username-input"
                 placeholder="Email"
                 name="email"
-                value={loginInfo.email}
-                onChange={handleLoginChange}
                 className="form-control mx-2"
                 style={{ width: '200px' }}
               />
@@ -40,8 +38,6 @@ return (
                 id="password-input"
                 placeholder="Password"
                 name="password"
-                value={loginInfo.password}
-                onChange={handleLoginChange}
                 className="form-control mx-2"
                 style={{ width: '200px' } }
               />

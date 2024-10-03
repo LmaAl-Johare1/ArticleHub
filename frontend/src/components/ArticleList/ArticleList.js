@@ -3,11 +3,11 @@ import './ArticleList.css'; // Import custom CSS for styling
 import ArticleCard from '../ArticleCard/ArticleCard';
 
 const ArticleList = ({ selectedTag }) => {
-  // Step 1: State to store articles fetched from the backend
+  // State to store articles fetched from the backend
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true); // Loading state
 
-  // Step 2: Fetch data from the backend using useEffect
+  // Fetch data from the backend using useEffect
   useEffect(() => {
     // Simulating a backend call
     // Replace this with actual API call to the backend when it's ready
