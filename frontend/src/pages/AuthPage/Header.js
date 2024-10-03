@@ -2,22 +2,11 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./Header.module.css";
 import Logo from "./Logo.png"
-<script src="../../services/authService.js"></script>
+import loginBtnClicked from '../../services/loginService';
+
 
 function Header() {
   
-// const [loginInfo, setLoginInfo] = useState({ email: '', password: '' });
-
-// const handleLoginChange = (e) => {
-//     setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value });
-//   };
-
-  
-
-// const handleLoginSubmit = () => {
-//     console.log('Login Info:', loginInfo);
-//   };
-
 return (
         <div  className={styles.Header}>
           
@@ -41,7 +30,7 @@ return (
                 className="form-control mx-2"
                 style={{ width: '200px' } }
               />
-              <button className="btn btn-primary" onClick={loginBtnClicked()} >
+              <button className="btn btn-primary" onClick={loginBtnClicked}>
                 Login
               </button>
             </div>

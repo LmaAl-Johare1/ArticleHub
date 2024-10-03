@@ -1,25 +1,9 @@
-import React, { useState } from 'react';
+import  registerBtnClicked  from '../../services/registerService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from "./Registration.module.css";
 <script src="../services/authService.js"></script>
 
 function Registration() {
-// const [registerInfo, setRegisterInfo] = useState({
-//     firstName: '',
-//     lastName: '',
-//     userName: '',
-//     email: '',
-//     password: '',
-//   });
-
-// const handleRegisterChange = (e) => {
-//     setRegisterInfo({ ...registerInfo, [e.target.name]: e.target.value });
-//   };
-
-
-// const handleRegisterSubmit = () => {
-//     console.log('Register Info:', registerInfo);
-//   };
 
 return(
 
@@ -33,8 +17,6 @@ return(
                 type="text"
                 placeholder="First Name"
                 name="firstName"
-                value={registerInfo.firstName}
-                onChange={handleRegisterChange}
                 className="form-control mb-3"
               />
             </div>
@@ -44,8 +26,6 @@ return(
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
-                value={registerInfo.lastName}
-                onChange={handleRegisterChange}
                 className="form-control mb-3"
               />
             </div>
@@ -55,8 +35,6 @@ return(
             type="text"
             placeholder="User Name"
             name="userName"
-            value={registerInfo.userName}
-            onChange={handleRegisterChange}
             className="form-control mb-3"
           />
           <input
@@ -64,8 +42,6 @@ return(
             type="email"
             placeholder="Email"
             name="email"
-            value={registerInfo.email}
-            onChange={handleRegisterChange}
             className="form-control mb-3"
           />
           <input
@@ -74,11 +50,9 @@ return(
             placeholder="Password"
             name="password"
             pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-            value={registerInfo.password}
-            onChange={handleRegisterChange}
             className="form-control mb-3"
           />
-          <button className="btn btn-success w-100" onClick="registerBtnClicked()">
+          <button className="btn btn-success w-100" onClick={registerBtnClicked}>
             Sign Up
           </button>
         </div>

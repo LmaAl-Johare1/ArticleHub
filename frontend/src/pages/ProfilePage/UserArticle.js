@@ -5,7 +5,7 @@ import Img from "./Img.jpg"
 function UserArticle({ image, title, content }){
   return (
     <div >
-    <div class="card" style={{width: "22rem", marginTop:-15 ,background:"#f7f6f6"}}>
+    <div class="card" style={{width: "22rem", marginTop:-15 ,background:"#f7f6f6" , cursor:"pointer"}}>
     <img src={Img} class="card-img-top" alt="..." style={{width:"95%" ,height:"18rem",margin:10}} />
     <div class="card-body" style={{width:"95%" ,marginLeft:10 ,marginBottom:10}}>
         <h5 class="card-title">Article title</h5>
