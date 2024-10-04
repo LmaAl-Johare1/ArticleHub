@@ -1,6 +1,6 @@
 import Header from './Header';
 import Registration from './Registration';
-import Footer from './Footer'
+import Footer from '../../components/Footer/Footer';
 
 function AuthPage() {
 
@@ -8,7 +8,6 @@ function AuthPage() {
   <div>
    <Header/>
    <Registration/>
-   <Footer/>
   </div>
    
    );

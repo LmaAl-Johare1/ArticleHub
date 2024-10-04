@@ -7,6 +7,7 @@ import TagList from '../../components/TagList/TagList';
 import ArticleList from '../../components/ArticleList/ArticleList';
 import Pagination from '../../components/Pagination/Pagination';
 import ArticleModal from '../CreateArticlePage/CreateArticlePage(Popup)';
+import Footer from '../../components/Footer/Footer';
 
 function HomePage() {
   // Modal state and handlers
@@ -59,6 +60,7 @@ function HomePage() {
         <ArticleModal show={isModalOpen} handleClose={handleCloseModal} />
       </div>
     </div>
+    
   );
 }
 

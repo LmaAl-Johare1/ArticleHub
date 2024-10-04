@@ -1,22 +1,28 @@
 import React from 'react';
-import './FeaturedArticle.css'; // Import the CSS file
+import './FeaturedArticle.css'; 
 import { useNavigate } from 'react-router-dom';
-import sampleImage from '../../images/sampleImage.jpg'; // Replace with actual image path
 
-const FeaturedArticle = () => {
+const FeaturedArticle = ({ image }) => {
   const navigate = useNavigate();
 
   // Function to handle "Read More" click
   const handleReadMore = () => {
-    navigate('/article/featured'); // Navigate to the featured article details page (replace 'featured' with the actual ID if needed)
+    navigate('/article/featured'); 
   };
+
+  // Placeholder image URL
+  const defaultImage = "https://via.placeholder.com/600x400?text=No+Image+Available"; // Placeholder image URL
 
   return (
     <div className="featured-article card">
       <div className="row no-gutters align-items-center">
         {/* Image Section */}
         <div className="col-md-5">
-          <img src={sampleImage} alt="Featured Article" className="featured-article-image img-fluid rounded-left" />
+          <img 
+            src={image || defaultImage} // Use default placeholder image if no image is provided
+            alt="Featured Article" 
+            className="featured-article-image img-fluid rounded-left" 
+          />
         </div>
 
         {/* Text Section */}

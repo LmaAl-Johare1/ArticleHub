@@ -1,7 +1,8 @@
 .Registration{
-    margin-left: 480px;
-    margin-top: 40px;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5vh;
 }
 
 .Registration h2{

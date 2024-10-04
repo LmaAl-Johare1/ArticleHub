@@ -1,13 +1,12 @@
-import Footer from '../AuthPage/Footer';
-import Header from './Header';
+import Footer from '../../components/Footer/Footer';
+import Header from '../../components/Header/Header';
 import EditForm from './EditForm';
 
 function EditProfilePage() {
   return (
     <div>
       <Header/> 
-      <EditForm/>
-      <Footer/>  
+      <EditForm/> 
     </div>
   );
 }

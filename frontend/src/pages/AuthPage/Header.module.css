@@ -1,55 +1,81 @@
-.Header{
-    margin: auto;
-    width: 100%;
-    position: relative;
-    height: 100px;
+/* Main Header Container */
+.Header {
+    background-color: #f8f9fa;
+    width: 100vw; /* Full width of the viewport */
+    padding: 1% 2%; /* Add padding for spacing */
     display: flex;
     justify-content: space-between;
-    background-color: #f7f6f6;
-}
-
-.Logo{
-    width: 160px;
-    height: 130px;
-    margin-left: 20px;
-    cursor:pointer;
-}
-
-
-.Header input{
-    margin-right: 100px;
-   
-}
-
-.Header button{
-    margin-right: 100px;
-
-}
-.Header img{
-    margin-left: 100px;
-    margin-top: -16px;
-
-}
-
-.Header button{
+    align-items: center;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  }
   
-    border: 2px solid #2c3b4c;
-    border-radius: 10%;
-    background-color: white;
-    color: #2c3b4c;
-
-}
-
-.Header button:hover {
-    background-color: #5d6f89;
+  /* Logo Box */
+  .logo-box img {
+    height: 70px; /* Set height for logo */
+    width: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Make it clickable */
+    display: block; /* Ensures proper layout on mobile */
+   
+  }
+  
+  /* Input and Buttons Container */
+  .nav-buttons {
+    display: flex;
+    gap: 15px; /* Add space between buttons */
+    margin-right: 50px; /* Adjust to fit layout */
+  }
+  
+  .Header button {
+    border-radius: 50px; /* Rounded buttons */
+    padding: 8px 20px; /* Add padding */
+    background-color: #2c3b4c; /* Primary color */
     color: white;
-    border: 2px solid #2c3b4c;
-    transition-duration: 0.4s;
-
+    border: none; /* Remove border */
+    transition: background-color 0.3s ease;
+    cursor: pointer; /* Pointer cursor on hover */
   }
-
-  .Header input{
-    border: 2px solid #2c3b4c;
-    
-
+  
+  /* Button Hover Effect */
+  .Header button:hover {
+    background-color: #5d6f89; /* Hover background color */
+    color: white;
   }
+  
+  /* Input Fields */
+  .Header input {
+    border: 2px solid #2c3b4c;
+    border-radius: 50px;
+    padding: 8px 15px;
+    margin-right: 50px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .Header input:focus {
+    outline: none;
+    border-color: #5d6f89; /* Change border color on focus */
+  }
+  
+  /* Responsive Media Queries */
+  @media (max-width: 768px) {
+    .Header {
+      flex-direction: column; /* Stack elements on smaller screens */
+      padding: 10px;
+    }
+  
+    .logo-box {
+      text-align: center; /* Center the logo on small screens */
+      margin-bottom: 10px; /* Add margin for spacing */
+    }
+  
+    .nav-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px; /* Adjust space between buttons */
+    }
+  
+    .Header input {
+      width: 80%; /* Full width on smaller screens */
+      margin-right: 0;
+    }
+  }
+  

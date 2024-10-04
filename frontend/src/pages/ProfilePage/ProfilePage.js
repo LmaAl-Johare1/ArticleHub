@@ -1,8 +1,7 @@
 import React from 'react';
 import { Container} from 'react-bootstrap';
 import ArticlesList from './AriclesList';
-import Footer from './Footer';
-import Header from './Header';
+import Header from '../../components/Header/Header';
 import PageSelcetion from './PageSelection';
 import UserInfo from './UserInfo';
 import UserStats from './UserStats';
@@ -19,8 +18,6 @@ const ProfilePage = () => {
             <PageSelcetion/>
 
         </Container>
-
-    <Footer/>
     </div>
     );
 };

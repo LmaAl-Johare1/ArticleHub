@@ -1,69 +1,59 @@
 .article {
-    color: #2c3b4c;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .article h1 {
-    color: #2c3b4c;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .article p {
-    color: #5d6f89;
-    font-size: 1.1rem;
-  }
-  
-  .badge {
-    font-size: 0.9rem;
-    margin-right: 10px;
-  }
-  
-  .article-body {
-    background-color: #ffffff;
-    padding: 20px;
-    color: #2c3b4c;
-    border-radius: 5px;
-    font-size: 1.1rem;
-  }
-  
-  .comments-section h5 {
-    color: #2c3b4c;
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-  }
-  
-  .comments-section .bg-light {
-    background-color: #e8edf4 !important;
-  }
-  
-  .btn-like {
-    background-color: #2c3b4c;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .btn-like:hover {
-    background-color: #27303c;
-  }
-  
-  .btn-like.liked {
-    background-color: #5d6f89; /* Change this to any color you want when liked */
-    color: #FAFAFA;
-  }
-  
-  
-  
-  textarea.form-control {
-    border: 1px solid #5d6f89;
-  }
-  
-  textarea.form-control:focus {
-    box-shadow: none;
-    border-color: #2c3b4c;
-  }
-  
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.article-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.article-author {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.article-date {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 20px;
+}
+
+.article-body {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.article-tags .badge {
+  font-size: 0.9rem;
+  padding: 8px;
+}
+
+.btn-like {
+  padding: 10px 20px;
+  background-color: #2c3b4c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-like.liked {
+  background-color: #FAFAFA;
+}
+
+.btn-like:hover {
+  background-color: #5d6f89;
+}
+
+.comments-section {
+  margin-top: 30px;
+}
+
+textarea {
+  resize: none;
+}
