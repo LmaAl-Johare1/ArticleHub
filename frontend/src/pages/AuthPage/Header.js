@@ -13,7 +13,7 @@ function Header() {
       <div className="col-12 col-md-6 d-flex justify-content-end align-items-center">
         <input
           type="text"
-          id="username-input"
+          id="Email-input"
           placeholder="Email"
           name="email"
           className="form-control mx-2"

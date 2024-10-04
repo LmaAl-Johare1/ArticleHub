@@ -1,26 +1,26 @@
 import axios from 'axios';
-const baseUrl=""
+//const baseUrl="http://localhost:50001/api"
 
 export default function registerBtnClicked(){
 
-    const fname = document.getElementById("register-fname-input").value
-    const lname = document.getElementById("register-lname-input").value
+    const first_name = document.getElementById("register-fname-input").value
+    const last_name = document.getElementById("register-lname-input").value
     const username = document.getElementById("register-username-input").value
     const email = document.getElementById("register-email-input").value
     const password = document.getElementById("register-password-input").value
     
     const formData=new FormData()
-    formData.append("fname",fname)
-    formData.append("lname",lname)
+    formData.append("first_name",first_name)
+    formData.append("last_name",last_name)
     formData.append("username",username)
     formData.append("email",email)
     formData.append("password",password)
     
 
     const headers={
-        "Content-Type":"multipart/form-data",
+        "Content-Type":"application/json",
       }
-    const url=`${baseUrl}/register`
+    const url="http://localhost:50001/api/users"
     axios.post(url,formData,{
       headers:headers
     })
