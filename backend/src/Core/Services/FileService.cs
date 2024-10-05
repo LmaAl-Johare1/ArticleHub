@@ -1,18 +1,24 @@
 ﻿using Core.IServices;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Services
 {
+    /// <summary>
+    /// Service class responsible for handling file operations, such as saving files to the server.
+    /// </summary>
     public class FileService : IFileService
     {
+        /// <summary>
+        /// Asynchronously saves the provided file to the server and returns its relative path.
+        /// </summary>
+        /// <param name="file">The file to be saved.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the relative path of the saved file.</returns>
         public async Task<string> SaveFileAsync(IFormFile file)
         {
-            var uploadsFolderPath = Path.Combine("wwwroot", "images"); 
+            var uploadsFolderPath = Path.Combine("wwwroot", "images");
             var fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
             var filePath = Path.Combine(uploadsFolderPath, fileName);
 
@@ -23,7 +29,7 @@ namespace Core.Services
                 await file.CopyToAsync(fileStream);
             }
 
-            return $"/images/{fileName}"; 
+            return $"/images/{fileName}";
         }
     }
 }

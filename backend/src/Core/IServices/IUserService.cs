@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Services
+namespace Core.IServices
 {
     public interface IUserService
     {

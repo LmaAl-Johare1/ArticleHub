@@ -37,3 +37,16 @@ C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Core\obj\Debug\netco
 C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CopyComplete
 C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.dll
 C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.pdb
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.deps.json
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.dll
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Core.pdb
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.AssemblyReference.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfoInputs.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.AssemblyInfo.cs
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CoreCompileInputs.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.csproj.CopyComplete
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.dll
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Core\obj\Debug\netcoreapp3.1\Core.pdb
