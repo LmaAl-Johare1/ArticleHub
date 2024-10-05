@@ -36,7 +36,6 @@ namespace Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
             services.AddControllers(setupAction =>
             {
                 setupAction.ReturnHttpNotAcceptable = true;
@@ -130,9 +129,6 @@ namespace Web
 
             app.UseRouting();
 
-            app.UseCors(options => options.WithOrigins("http://localhost:3000")
-                                                      .AllowAnyMethod()
-                                                      .AllowAnyHeader());
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -140,7 +136,6 @@ namespace Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                //endpoints.MapRazorPages();
             });
         }
     }

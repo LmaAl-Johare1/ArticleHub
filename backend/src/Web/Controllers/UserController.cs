@@ -20,21 +20,20 @@ namespace Web.Controllers
 
         public UserController(IUserService userService)
         {
-            _IUserService = userService ??
-               throw new ArgumentNullException(nameof(userService));
+            _IUserService = userService;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(UserLoginDto userLogin)
         {
-            var token = await _IUserService.LoginUserAsync(userLogin);
-            if (token == null)
+            var userDto = await _IUserService.LoginUserAsync(userLogin);
+            if (userDto == null)
             {
-                return Unauthorized(new { msg = "The email or the password is wrong" } );
+                return Unauthorized(new { message = "The email or the password is wrong" } );
             }
 
-            return Ok(new { token = token });
+            return Ok(userDto);
         }
 
         [AllowAnonymous]
@@ -44,17 +43,79 @@ namespace Web.Controllers
             var emailNotAvailable = await _IUserService.EmailAvailableAsync(userForCreation.email);
             if (emailNotAvailable)
             {
-                return NotFound("email Not Available");
+                return BadRequest(new { message = "email is exist" });
             }
 
             var userExists = await _IUserService.UserExistsAsync(userForCreation.username);
             if (userExists)
             {
-                return NotFound("user Exists");
+                return BadRequest(new { message = "username is exists" });
             }
 
-            var token = await _IUserService.CreateUserAsync(userForCreation);
-            return Ok(new {token = token});
+            var userDto = await _IUserService.CreateUserAsync(userForCreation);
+            return Ok(userDto);
+        }
+
+        [HttpGet("{username}")]
+        public async Task<ActionResult<UserProfileDto>> GetUserProfile(string username)
+        {
+            var profileToReturn = await _IUserService.GetProfileAsync(username);
+            if (profileToReturn == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { profile = profileToReturn });
+        }
+
+        [HttpPut("{username}")]
+        public async Task<ActionResult<UserDto>> UpdateUser(UserForUpdateDto userForUpdate, string username)
+        {
+            var currentUser = await _IUserService.GetCurrentUserAsync();
+            if (currentUser.username != username)
+            {
+                return Unauthorized();
+            }
+
+            var emailNotAvailable = await _IUserService.EmailAvailableAsync(userForUpdate.email);
+            if (currentUser.email != userForUpdate.email && emailNotAvailable)
+            {
+                    return BadRequest(new { message = "email is exist" });
+            }
+           
+
+            var userExists = await _IUserService.UserExistsAsync(userForUpdate.username);
+            if (currentUser.username != userForUpdate.username && userExists)
+            {
+                return BadRequest(new { message = "username is exists" });
+            }
+
+            var updatedUserToReturn = await _IUserService.UpdateUserAsync(username, userForUpdate);
+            return Ok(new { user = updatedUserToReturn });
+        }
+
+        [HttpPost("{username}/follow")]
+        public async Task<ActionResult> FollowUser(string username)
+        {
+            var followedProfileToReturn = await _IUserService.FollowUserAsync(username);
+            if (!followedProfileToReturn)
+            {
+                return BadRequest();
+            }
+
+            return new ObjectResult(new { profile = followedProfileToReturn }) { StatusCode = StatusCodes.Status201Created };
+        }
+
+        [HttpDelete("{username}/follow")]
+        public async Task<ActionResult> UnFollowUser(string username)
+        {
+            var unFollowedProfileToReturn = await _IUserService.UnFollowUserAsync(username);
+            if (!unFollowedProfileToReturn)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }

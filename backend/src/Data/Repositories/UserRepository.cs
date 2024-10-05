@@ -28,7 +28,21 @@ namespace Data.Repositories
             bool userExists = await _context.user.AnyAsync(u => u.username == username);
             return userExists;
         }
+        public async Task<User> GetUserAsync(string username)
+        {
+            if (String.IsNullOrEmpty(username))
+            {
+                throw new ArgumentNullException(nameof(username));
+            }
 
+            var user = await _context.user.Include(u => u.user_articles)
+                                           .ThenInclude(u=>u.article_likes)
+                                           .Include(u => u.user_followings)
+                                           .Include(u => u.user_followers)
+                                           .Include(u => u.user_likes)
+                                           .FirstOrDefaultAsync(u => u.username == username);
+            return user;
+        }
         public async Task<User> GetUserAsNoTrackingAsync(string username)
         {
             if (String.IsNullOrEmpty(username))
@@ -52,10 +66,58 @@ namespace Data.Repositories
         {
             await _context.user.AddAsync(user);
         }
+        public async Task<User> UpdateUser(string username, User userForUpdate)
+        {
+            var updatedUser  = await GetUserAsync(username);
+
+            if (!string.IsNullOrWhiteSpace(userForUpdate.first_name))
+            {
+                updatedUser.first_name = userForUpdate.first_name;
+            }
+            if (!string.IsNullOrWhiteSpace(userForUpdate.last_name))
+            {
+                updatedUser.last_name = userForUpdate.last_name;
+            }
+            if (!string.IsNullOrWhiteSpace(userForUpdate.username))
+            {
+                updatedUser.username = userForUpdate.username.ToLower();
+            }
+            if (!string.IsNullOrWhiteSpace(userForUpdate.email))
+            {
+                updatedUser.email = userForUpdate.email.ToLower();
+            }
+            if (!string.IsNullOrWhiteSpace(userForUpdate.bio))
+            {
+                updatedUser.bio = userForUpdate.bio;
+            }
+
+            return updatedUser;
+
+        }
         public async Task<bool> EmailAvailableAsync(string email)
         {
             var emailNotAvailable = await _context.user.Select(a => a.email).ContainsAsync(email);
             return emailNotAvailable;
+        }
+
+        public async Task FollowUserAsync(int currentUserId, int userToFollowId)
+        {
+            var timestamp = DateTime.UtcNow;
+            var userFollower =
+                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToFollowId, created = timestamp, updated = timestamp };
+            await _context.user_follower.AddAsync(userFollower);
+        }
+        public void UnfollowUser(int currentUserId, int userToUnfollowId)
+        {
+            var userFollower =
+                new UserFollower { User_follower_id = currentUserId, user_followeing_id = userToUnfollowId };
+            _context.user_follower.Remove(userFollower);
+        }
+        public async Task<bool> IsFollowedAsync(int FollowerId, int FolloweingId)
+        {
+            bool isFollowed =
+               await _context.user_follower.AnyAsync(uf => uf.User_follower_id == FollowerId && uf.user_followeing_id == FolloweingId);
+            return isFollowed;
         }
         public async Task SaveChangesAsync()
         {

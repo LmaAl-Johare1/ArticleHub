@@ -30,7 +30,7 @@ namespace Core.Services
             _mapper = mapper;
         }
 
-        public async Task<string> LoginUserAsync(UserLoginDto userLogin)
+        public async Task<UserDto> LoginUserAsync(UserLoginDto userLogin)
         {
             userLogin.email = userLogin.email.ToLower();
             userLogin.password = userLogin.password.GetHash();
@@ -42,17 +42,21 @@ namespace Core.Services
                 return null;
             }
 
-            var token = _IAuthentication.Generate(userlogedin);
-            return token;
+            var userDto = new UserDto
+            {
+                token = _IAuthentication.Generate(userlogedin),
+                username = userlogedin.username
+            };
+            return userDto;
         }
 
-        public async Task<UserDto> GetCurrentUserAsync()
+        public async Task<UserProfileDto> GetCurrentUserAsync()
         {
             var currentUsername = _accessor?.HttpContext?.User?.Claims?.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             if (!String.IsNullOrEmpty(currentUsername))
             {
                 var currentUser = await _IUserRepository.GetUserAsNoTrackingAsync(currentUsername);
-                var userToReturn = _mapper.Map<UserDto>(currentUser);
+                var userToReturn = _mapper.Map<UserProfileDto>(currentUser, a => a.Items["currentUserId"] = currentUser.id);
                 return userToReturn;
             }
 
@@ -71,7 +75,7 @@ namespace Core.Services
             return -1;
         }
 
-        public async Task<string> CreateUserAsync(UserForCreationDto userForCreation)
+        public async Task<UserDto> CreateUserAsync(UserForCreationDto userForCreation)
         {
             userForCreation.username = userForCreation.username.ToLower();
             userForCreation.email = userForCreation.email.ToLower();
@@ -85,8 +89,38 @@ namespace Core.Services
             await _IUserRepository.CreateUserAsync(userEntityForCreation);
             await _IUserRepository.SaveChangesAsync();
 
-            var token = _IAuthentication.Generate(userEntityForCreation);
-            return token;
+            var userDto = new UserDto
+            {
+                token = _IAuthentication.Generate(userEntityForCreation),
+                username = userEntityForCreation.username
+            };
+
+            return userDto;
+        }
+
+        public async Task<UserProfileDto> UpdateUserAsync(string username, UserForUpdateDto userForUpdate)
+        {
+            var userEntityForUpdate = _mapper.Map<User>(userForUpdate);
+
+            var timestamp = DateTime.UtcNow;
+            userEntityForUpdate.updated = timestamp;
+
+            var updatedUser = await _IUserRepository.UpdateUser(username, userEntityForUpdate);
+            await _IUserRepository.SaveChangesAsync();
+
+            var currentUserId = await GetCurrentUserIdAsync();
+            var UpdatedUserToReturn = _mapper.Map<UserProfileDto>(updatedUser, a => a.Items["currentUserId"] = currentUserId);
+
+            var articlesDto = new List<ArticleCardDto>();
+            foreach (var article in updatedUser.user_articles)
+            {
+                var articleToReturn = _mapper.Map<ArticleCardDto>(article, a => a.Items["currentUserId"] = currentUserId);
+
+                articlesDto.Add(articleToReturn);
+            }
+
+            UpdatedUserToReturn.articles = articlesDto;
+            return UpdatedUserToReturn;
         }
 
         public async Task<bool> EmailAvailableAsync(string email)
@@ -99,6 +133,88 @@ namespace Core.Services
         {
             var userExists = await _IUserRepository.UserExistsAsync(username);
             return userExists;
+        }
+
+        public async Task<UserProfileDto> GetProfileAsync(string username)
+        {
+            username = username.ToLower();
+
+            var user = await _IUserRepository.GetUserAsync(username);
+            if (user == null)
+            {
+                return null;
+            }
+
+            var currentUserId = await GetCurrentUserIdAsync();
+
+            var profileToReturn = _mapper.Map<UserProfileDto>(user, a => a.Items["currentUserId"] = currentUserId);
+
+            var articlesDto = new List<ArticleCardDto>();
+            foreach (var article in user.user_articles)
+            {
+                var articleToReturn = _mapper.Map<ArticleCardDto>(article, a => a.Items["currentUserId"] = currentUserId);
+
+                articlesDto.Add(articleToReturn);
+            }
+
+            profileToReturn.articles = articlesDto;
+            return profileToReturn;
+        }
+
+        public async Task<bool> FollowUserAsync(string username)
+        {
+            username = username.ToLower();
+
+            var currentUser = await GetCurrentUserAsync();
+            var currentUserId = await GetCurrentUserIdAsync();
+            if (currentUser.username == username)
+            {
+                return false;
+            }
+
+            var userToFollow = await _IUserRepository.GetUserAsync(username);
+            if (userToFollow == null)
+            {
+                return false;
+            }
+
+            bool isFollowed = await _IUserRepository.IsFollowedAsync(currentUserId, userToFollow.id);
+            if (isFollowed)
+            {
+                return false;
+            }
+
+            await _IUserRepository.FollowUserAsync(currentUserId, userToFollow.id);
+            await _IUserRepository.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> UnFollowUserAsync(string username)
+        {
+            username = username.ToLower();
+
+            var currentUser = await GetCurrentUserAsync();
+            var currentUserId = await GetCurrentUserIdAsync();
+            if (currentUser.username == username)
+            {
+                return false;
+            }
+
+            var userToUnfollow = await _IUserRepository.GetUserAsNoTrackingAsync(username);
+            if (userToUnfollow == null)
+            {
+                return false;
+            }
+
+            bool isFollowed = await _IUserRepository.IsFollowedAsync(currentUserId, userToUnfollow.id);
+            if (!isFollowed)
+            {
+                return false;
+            }
+
+            _IUserRepository.UnfollowUser(currentUserId, userToUnfollow.id);
+            await _IUserRepository.SaveChangesAsync();
+            return true;
         }
     }
 }
