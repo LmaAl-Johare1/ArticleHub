@@ -11,7 +11,7 @@ function UserInfo() {
                     <h5 className="mb-1">Full Name</h5>
                     <p className="mb-1 text-muted">user@example.com</p>
                 </div>
-                <Button variant="outline-primary">Follow</Button>
+                {/* <Button variant="outline-primary">Follow</Button> */}
             </div>
             <br></br>
             <p className="text-muted">
