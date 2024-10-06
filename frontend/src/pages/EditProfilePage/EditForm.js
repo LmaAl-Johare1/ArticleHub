@@ -6,9 +6,9 @@ import saveBtnClicked from '../../services/editprofileService';
 function EditForm(){
     // State for form fields
     const [formData, setFormData] = useState({
-        first_Name: '',
-        last_Name: '',
-        user_Name: '',
+        first_name: '',
+        last_name: '',
+        username: '',
         email: '',
         bio: ''
     });
@@ -28,9 +28,9 @@ function EditForm(){
     // Handle form reset
     const handleReset = () => {
         setFormData({
-            first_Name: '',
-            last_Name: '',
-            user_Name: '',
+            first_name: '',
+            last_name: '',
+            username: '',
             email: '',
             bio: ''
         });
@@ -50,8 +50,8 @@ function EditForm(){
                                     <Form.Group className="mb-3" controlId="formFirstName">
                                         <Form.Control 
                                             type="text" 
-                                            name="first_Name"
-                                            value={formData.first_Name}
+                                            name="first_name"
+                                            value={formData.first_name}
                                             onChange={handleChange}
                                             placeholder="Edit First Name" 
                                         />
@@ -61,8 +61,8 @@ function EditForm(){
                                     <Form.Group className="mb-3" controlId="formLastName">
                                         <Form.Control 
                                             type="text" 
-                                            name="last_Name"
-                                            value={formData.last_Name}
+                                            name="last_name"
+                                            value={formData.last_name}
                                             onChange={handleChange}
                                             placeholder="Edit Last Name" 
                                         />
@@ -72,8 +72,8 @@ function EditForm(){
                             <Form.Group className="mb-3" controlId="formUserName">
                                 <Form.Control 
                                     type="text" 
-                                    name="user_Name"
-                                    value={formData.user_Name}
+                                    name="username"
+                                    value={formData.username}
                                     onChange={handleChange}
                                     placeholder="Edit User Name" 
                                 />
