@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EditArticle.css';
+import updateArticleClicked from '../../services/articleService';
 
 const EditArticleModal = ({ show, handleClose, articleData }) => {
   const availableTags = [
@@ -16,6 +17,8 @@ const EditArticleModal = ({ show, handleClose, articleData }) => {
     tags: [],
     body: ''
   });
+
+  const [loading, setLoading] = useState(false); 
 
   // Pre-populate form data if articleData is passed
   useEffect(() => {
@@ -42,11 +45,28 @@ const EditArticleModal = ({ show, handleClose, articleData }) => {
     setFormData({ ...formData, tags: selected ? selected.map(tag => tag.value) : [] });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Logic to submit edited article data, such as sending to a server or updating state
-    console.log('Edited article data:', formData);
-    handleClose(); // Close modal after submitting
+    setLoading(true); // Set loading state to true while submitting
+    try {
+      // Prepare form data for the API request
+      const updatedData = new FormData();
+      updatedData.append('title', formData.title);
+      updatedData.append('body', formData.body);
+      if (formData.file) {
+        updatedData.append('image', formData.file); // If the file is replaced
+      }
+      updatedData.append('tags', JSON.stringify(formData.tags));
+
+      // Call the updateArticleClicked function to update the article
+      await updateArticleClicked(articleData.id, updatedData);
+      handleClose(); // Close modal after submitting
+    } catch (error) {
+      console.error('Error updating article:', error);
+      alert('Failed to update the article. Please try again.');
+    } finally {
+      setLoading(false); // Set loading state back to false after completion
+    }
   };
 
   if (!show) return null;
@@ -72,6 +92,7 @@ const EditArticleModal = ({ show, handleClose, articleData }) => {
                     value={formData.title}
                     onChange={handleInputChange}
                     placeholder="Edit article title"
+                    required
                   />
                 </div>
 
@@ -109,13 +130,16 @@ const EditArticleModal = ({ show, handleClose, articleData }) => {
                     value={formData.body}
                     onChange={handleInputChange}
                     placeholder="Edit article content"
+                    required
                   ></textarea>
                 </div>
               </form>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" onClick={handleClose}>Cancel</button>
-              <button type="button" className="btn btn-primary" onClick={handleSubmit}>Save Changes</button>
+              <button type="button" className="btn btn-primary" onClick={handleSubmit} disabled={loading}>
+                {loading ? 'Saving...' : 'Save Changes'}
+              </button>
             </div>
           </div>
         </div>

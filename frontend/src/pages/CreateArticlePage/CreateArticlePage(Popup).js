@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { createArticle } from './api/article'; // Assuming api.js is where your API functions are defined
+import createArticleClicked from '../../services/articleService'; 
 
-const ArticleModal = ({ show, handleClose, token }) => {
+const ArticleModal = ({ show, handleClose }) => {
   const availableTags = [
     { value: 'Technology', label: 'Technology' },
     { value: 'Science', label: 'Science' },
     { value: 'Health', label: 'Health' },
   ];
 
+  // Input states for the article
   const [articleTitle, setArticleTitle] = useState('');
   const [articleBody, setArticleBody] = useState('');
   const [articleFile, setArticleFile] = useState(null);
@@ -18,18 +19,22 @@ const ArticleModal = ({ show, handleClose, token }) => {
 
   // Handle file selection
   const handleFileChange = (e) => {
-    setArticleFile(e.target.files[0]); // Only selecting the first file
+    setArticleFile(e.target.files[0]); 
   };
 
-  // Handle form submission
+  // Handle form submission using createArticleClicked from the service
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      // Combine the tags into a comma-separated string
-      const tags = selectedTags.join(',');
+      // Prepare form data for submission
+      const formData = new FormData();
+      formData.append('title', articleTitle);
+      formData.append('body', articleBody);
+      formData.append('image', articleFile);
+      formData.append('tags', JSON.stringify(selectedTags));
 
-      // Call the createArticle function to post the article data
-      await createArticle(articleTitle, articleBody, articleFile, token);
+      // Use createArticleClicked function to submit data
+      createArticleClicked(formData);
 
       alert("Article created successfully");
       handleClose(); // Close the modal on success
@@ -68,7 +73,7 @@ const ArticleModal = ({ show, handleClose, token }) => {
                 </div>
 
                 <div className="form-group mt-3">
-                  <label htmlFor="formArticleFile">Upload File</label>
+                  <label htmlFor="formArticleFile">Upload image File</label>
                   <input
                     type="file"
                     className="form-control"

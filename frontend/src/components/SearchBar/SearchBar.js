@@ -1,11 +1,22 @@
 import React, { useState } from 'react';
-import './SearchBar.css'; 
+import './SearchBar.css';
+import searchBtnClick from '../../services/searchBtnClick';
 
-const SearchBar = () => {
+const SearchBar = ({ onSearchResults }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSearch = () => {
-    console.log('Search Query:', searchQuery);
+  const handleSearch = async () => {
+    setLoading(true);
+    try {
+      const searchResults = await searchBtnClick(searchQuery); // Call the search function
+      onSearchResults(searchResults); // Send results to the parent component
+    } catch (error) {
+      console.error('Error during search:', error);
+      alert('Failed to perform the search. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -13,12 +24,12 @@ const SearchBar = () => {
       <input
         type="text"
         className="search-input"
-        placeholder="Search..."
+        placeholder="Search by author, tag, or article title..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button className="search-button" onClick={handleSearch}>
-        Search
+      <button className="search-button" onClick={handleSearch} disabled={loading}>
+        {loading ? 'Searching...' : 'Search'}
       </button>
     </div>
   );

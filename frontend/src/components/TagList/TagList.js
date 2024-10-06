@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
-import './TagList.css'; // Import your custom CSS
+import './TagList.css'; 
 import CreateArticleButton from '../CreateArticleButton/CreateArticleButton';
+import tagClickOn from '../../services/tagClickOn';
 
 const TagList = ({ onTagClick, onCreateClick }) => {
   const [activeTag, setActiveTag] = useState('All'); // Default active tag
 
   // Function to handle tag selection
-  const handleTagClick = (tag) => {
+  const handleTagClick = async (tag) => {
     setActiveTag(tag); // Update the active tag
-    onTagClick(tag); // Notify parent component (HomePage) of the selected tag
+    try {
+      // Fetch articles based on the clicked tag
+      const articlesData = await tagClickOn(tag);
+      onTagClick(articlesData); // Notify parent component (HomePage) of the selected tag and articles data
+    } catch (error) {
+      console.error('Error fetching articles for selected tag:', error);
+    }
   };
 
   return (

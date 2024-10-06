@@ -1,13 +1,20 @@
 import React from 'react';
 import './ArticleCard.css';
 import { useNavigate } from 'react-router-dom';
+import getArticleById from '../../services/articleService';
 
 const ArticleCard = ({ id, image, title, content }) => {
   const navigate = useNavigate();
 
   // Function to handle "Read More" click
-  const handleReadMore = () => {
-    navigate(`/article/${id}`); // Navigate to the ArticlePage with the article ID
+  const handleReadMore = async () => {
+    try {
+      const articleData = await getArticleById(id); 
+      console.log(articleData); 
+      navigate(`/article/${id}`); 
+    } catch (error) {
+      console.error('Error while fetching the article:', error);
+    }
   };
 
   return (
