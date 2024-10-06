@@ -18,17 +18,17 @@ namespace Data.Repositories
         /// <summary>
         /// Initializes a new instance of the <see cref="TagRepository"/> class.
         /// </summary>
-        /// <param name="context">The database context for accessing tag data.</param>
+        /// <param name="context">The database context used for data operations.</param>
         public TagRepository(ArticleHubDbContext context)
         {
             _context = context;
         }
 
         /// <summary>
-        /// Asynchronously retrieves a list of tags by their names.
+        /// Retrieves a list of tags that match the provided tag names.
         /// </summary>
         /// <param name="tagNames">A list of tag names to search for.</param>
-        /// <returns>A task that represents the asynchronous operation, containing a list of found tags.</returns>
+        /// <returns>A <see cref="Task{List{Tag}}"/> containing the matching tags.</returns>
         public async Task<List<Tag>> GetTagsByNamesAsync(List<string> tagNames)
         {
             return await _context.tag

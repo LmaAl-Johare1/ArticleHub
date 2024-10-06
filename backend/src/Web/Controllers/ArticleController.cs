@@ -1,9 +1,12 @@
-﻿using Core.Models;
+﻿using Core.IServices;
+using Core.Models;
 using Core.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -15,7 +18,7 @@ namespace Web.Controllers
     /// </summary>
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/articles")]
     public class ArticleController : ControllerBase
     {
         private readonly IArticleService _articleService;
@@ -40,18 +43,22 @@ namespace Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateArticle([FromForm] ArticleForCreationDto articleForCreationDto)
         {
-            var username = GetUsername();
+            var username = GetUsernameOrUnauthorized();
             if (username == null) return Unauthorized();
 
             try
             {
                 var article = await _articleService.CreateArticleAsync(articleForCreationDto, username);
-                return CreatedAtAction(nameof(CreateArticle), new { article.title }, article);
+                if (article != null)
+                {
+                    return CreatedAtAction(nameof(GetArticle), new { title = article.title }, article);
+                }
+                return BadRequest("Failed to create article.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error creating article");
-                return StatusCode(500, "An error occurred while creating the article.");
+                LogError(ex, articleForCreationDto.title);
+                return StatusCode(500, "Internal server error.");
             }
         }
 
@@ -64,7 +71,7 @@ namespace Web.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> EditArticle(int id, [FromForm] ArticleForUpdateDto articleForUpdateDto)
         {
-            var username = GetUsername();
+            var username = GetUsernameOrUnauthorized();
             if (username == null) return Unauthorized();
 
             try
@@ -74,8 +81,8 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error updating article with ID {id}");
-                return StatusCode(500, "An error occurred while updating the article.");
+                LogError(ex, $"Error updating article with ID {id}");
+                return StatusCode(500, "Internal server error.");
             }
         }
 
@@ -89,14 +96,14 @@ namespace Web.Controllers
         {
             try
             {
-                var articleDetails = await _articleService.GetArticleByIdAsync(id);
-                if (articleDetails == null) return NotFound("Article not found.");
-                return Ok(articleDetails);
+                var article = await _articleService.GetArticleByIdAsync(id);
+                if (article == null) return NotFound("Article not found.");
+                return Ok(article);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error fetching article with ID {id}");
-                return StatusCode(500, "An error occurred while fetching the article details.");
+                LogError(ex, $"Error fetching article with ID {id}");
+                return StatusCode(500, "An error occurred while fetching the article.");
             }
         }
 
@@ -108,7 +115,7 @@ namespace Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticle(int id)
         {
-            var username = GetUsername();
+            var username = GetUsernameOrUnauthorized();
             if (username == null) return Unauthorized();
 
             try
@@ -119,7 +126,7 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error deleting article with ID {id}");
+                LogError(ex, $"Error deleting article with ID {id}");
                 return StatusCode(500, "An error occurred while deleting the article.");
             }
         }
@@ -127,13 +134,16 @@ namespace Web.Controllers
         /// <summary>
         /// Retrieves a paginated list of articles.
         /// </summary>
-        /// <param name="offset">The page number for pagination.</param>
-        /// <param name="keyword">Optional keyword to filter articles by title or content.</param>
-        /// <param name="tag">Optional tag to filter articles by.</param>
+        /// <param name="searchDto">Data transfer object containing search parameters.</param>
         /// <returns>An <see cref="IActionResult"/> containing a list of articles.</returns>
         [HttpGet]
         public async Task<IActionResult> GetArticles([FromQuery] ArticlesSearchDto searchDto)
         {
+            if (searchDto.Offset < 1)
+            {
+                searchDto.Offset = 1;
+            }
+
             try
             {
                 var articles = await _articleService.GetArticlesAsync(searchDto);
@@ -142,17 +152,105 @@ namespace Web.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error fetching articles with offset: {searchDto.Offset}, keyword: {searchDto.keyword}, tag: {searchDto.tag}");
+                LogError(ex, $"Error fetching articles with offset: {searchDto.Offset}, keyword: {searchDto.keyword}, tag: {searchDto.tag}");
                 return StatusCode(500, "An error occurred while fetching the articles.");
             }
         }
+
         /// <summary>
-        /// Retrieves the current user's username from the claims.
+        /// Adds a comment to an article.
         /// </summary>
-        /// <returns>The username of the current user or null if not authenticated.</returns>
-        private string GetUsername()
+        /// <param name="articleId">ID of the article to comment on.</param>
+        /// <param name="commentDto">Data transfer object containing comment information.</param>
+        /// <returns>An <see cref="IActionResult"/> indicating the result of the operation.</returns>
+        [HttpPost("{articleId}/comment")]
+        public async Task<IActionResult> AddComment(int articleId, [FromBody] ArticleCommentDto commentDto)
         {
-            return User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var username = GetUsernameOrUnauthorized();
+            if (username == null) return Unauthorized();
+
+            try
+            {
+                var comment = await _articleService.AddCommentToArticleAsync(articleId, commentDto, username);
+                return CreatedAtAction(nameof(GetArticle), new { id = articleId }, comment);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, "Error adding comment to article.");
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Likes an article.
+        /// </summary>
+        /// <param name="slug">The slug of the article to like.</param>
+        /// <returns>An <see cref="ActionResult"/> indicating the result of the like operation.</returns>
+        [HttpPost("{slug}/like")]
+        public async Task<ActionResult> LikeArticle(string slug)
+        {
+            try
+            {
+                var likedArticle = await _articleService.LikeArticleAsync(slug);
+                if (!likedArticle)
+                {
+                    return BadRequest("Failed to like the article.");
+                }
+                return Created("", new { article = likedArticle });
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, $"Error liking article with slug {slug}");
+                return StatusCode(500, "An error occurred while liking the article.");
+            }
+        }
+
+        /// <summary>
+        /// Unlikes an article.
+        /// </summary>
+        /// <param name="slug">The slug of the article to unlike.</param>
+        /// <returns>An <see cref="ActionResult"/> indicating the result of the unlike operation.</returns>
+        [HttpDelete("{slug}/like")]
+        public async Task<ActionResult> UnLikeArticle(string slug)
+        {
+            try
+            {
+                var unlikedArticle = await _articleService.UnLikeArticleAsync(slug);
+                if (!unlikedArticle)
+                {
+                    return BadRequest("Failed to unlike the article.");
+                }
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                LogError(ex, $"Error unliking article with slug {slug}");
+                return StatusCode(500, "An error occurred while unliking the article.");
+            }
+        }
+
+        /// <summary>
+        /// Retrieves the current user's username from the claims or returns Unauthorized.
+        /// </summary>
+        /// <returns>The username or null if not found.</returns>
+        private string GetUsernameOrUnauthorized()
+        {
+            var username = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return string.IsNullOrEmpty(username) ? null : username;
+        }
+
+        /// <summary>
+        /// Logs errors with exception details.
+        /// </summary>
+        /// <param name="ex">The exception that occurred.</param>
+        /// <param name="message">The custom message to log with the exception.</param>
+        private void LogError(Exception ex, string message)
+        {
+            _logger.LogError(ex, message);
         }
     }
 }

@@ -1,3 +1,4 @@
+// src/services/articleService.js
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:5000/api'; // Replace with your actual backend URL
@@ -31,4 +32,7 @@ export default function createArticleClicked(formData) {
 };
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ca400d9910c93a9f70248b89ff91a23b4c49c417

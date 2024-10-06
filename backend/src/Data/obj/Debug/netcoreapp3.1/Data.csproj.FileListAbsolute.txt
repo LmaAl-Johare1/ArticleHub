@@ -24,3 +24,29 @@ C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.CoreCompileIn
 C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.dll
 C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.pdb
 C:\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.genruntimeconfig.cache
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.deps.json
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.json
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.dev.json
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.AssemblyReference.cache
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfoInputs.cache
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfo.cs
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.CoreCompileInputs.cache
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.dll
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.pdb
+C:\Users\hp\Desktop\ArticleHub final\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.genruntimeconfig.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.deps.json
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.json
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.runtimeconfig.dev.json
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.dll
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\bin\Debug\netcoreapp3.1\Data.pdb
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.AssemblyReference.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfoInputs.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.AssemblyInfo.cs
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.csproj.CoreCompileInputs.cache
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.dll
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.pdb
+C:\Users\Lma Al Johare\OneDrive\Desktop\ArticleHub\backend\src\Data\obj\Debug\netcoreapp3.1\Data.genruntimeconfig.cache

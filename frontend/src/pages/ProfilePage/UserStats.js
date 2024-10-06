@@ -6,7 +6,7 @@ function UserStats() {
         <div>
             <Row className="mb-5" >
              
-             <Col md={4}style={{marginLeft:770 , marginTop:-255 ,width:355}}>
+             <Col md={4}style={{marginLeft:"auto" , marginTop:-255 ,width:355}}>
                  {/* Stats */}
                  <Card className="text-center p-3 mb-3 " style={{height:75,cursor:"pointer" , background:"#f7f6f6"}}>
                      <h5><Badge bg="secondary" >Followers</Badge></h5>

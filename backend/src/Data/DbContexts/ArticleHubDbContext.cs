@@ -1,31 +1,71 @@
 ﻿using Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Data.DbContexts
 {
+    /// <summary>
+    /// Represents the database context for the ArticleHub application.
+    /// </summary>
     public class ArticleHubDbContext : DbContext
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ArticleHubDbContext"/> class.
+        /// </summary>
+        /// <param name="options">The options for the DbContext.</param>
         public ArticleHubDbContext(DbContextOptions<ArticleHubDbContext> options)
-          : base(options)
+            : base(options)
         {
         }
 
+        /// <summary>
+        /// Gets or sets the DbSet for articles.
+        /// </summary>
         public DbSet<Article> article { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for article tags.
+        /// </summary>
         public DbSet<ArticleTag> article_tag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for article comments.
+        /// </summary>
         public DbSet<ArticleComment> article_comment { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for article likes.
+        /// </summary>
         public DbSet<ArticleLike> article_like { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for tags.
+        /// </summary>
         public DbSet<Tag> tag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for users.
+        /// </summary>
         public DbSet<User> user { get; set; }
+
+        /// <summary>
+        /// Gets or sets the DbSet for user followers.
+        /// </summary>
         public DbSet<UserFollower> user_follower { get; set; }
 
+        /// <summary>
+        /// Configures the database context options.
+        /// </summary>
+        /// <param name="optionsBuilder">The builder used to create options for the context.</param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-
+            // You can configure additional options here if necessary
         }
 
+        /// <summary>
+        /// Configures the model for the context using the <see cref="ModelBuilder"/>.
+        /// </summary>
+        /// <param name="modelBuilder">The model builder used to configure the model.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Article>(a =>
@@ -74,7 +114,7 @@ namespace Data.DbContexts
 
             modelBuilder.Entity<ArticleLike>(a =>
             {
-                a.HasKey(af => new {af.user_id, af.article_id});
+                a.HasKey(af => new { af.user_id, af.article_id });
 
                 a.Property(a => a.created).IsRequired();
                 a.Property(a => a.updated).IsRequired();
@@ -118,9 +158,9 @@ namespace Data.DbContexts
                 c.Property(c => c.updated).IsRequired();
 
                 c.HasOne(ua => ua.article)
-               .WithMany(u => u.article_comments)
-               .HasForeignKey(ua => ua.article_id)
-               .OnDelete(DeleteBehavior.Cascade);
+                .WithMany(u => u.article_comments)
+                .HasForeignKey(ua => ua.article_id)
+                .OnDelete(DeleteBehavior.Cascade);
 
                 c.HasOne(u => u.user)
                 .WithMany(u => u.user_comments)

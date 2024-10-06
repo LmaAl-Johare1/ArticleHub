@@ -4,15 +4,19 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Services
+namespace Core.IServices
 {
     public interface IUserService
     {
         Task<bool> EmailAvailableAsync(string email);
         Task<bool> UserExistsAsync(string username);
-        Task<string> LoginUserAsync(UserLoginDto userLogin);
-        Task<string> CreateUserAsync(UserForCreationDto userForCreation);
-        Task<UserDto> GetCurrentUserAsync();
+        Task<UserDto> LoginUserAsync(UserLoginDto userLogin);
+        Task<UserDto> CreateUserAsync(UserForCreationDto userForCreation);
+        Task<UserProfileDto> UpdateUserAsync(string username, UserForUpdateDto userForUpdateDto);
+        Task<UserProfileDto> GetCurrentUserAsync();
         Task<int> GetCurrentUserIdAsync();
+        Task<UserProfileDto> GetProfileAsync(string username);
+        Task<bool> FollowUserAsync(string username);
+        Task<bool> UnFollowUserAsync(string username);
     }
 }
