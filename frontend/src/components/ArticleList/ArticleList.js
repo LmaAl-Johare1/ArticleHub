@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ArticleList.css'; 
 import ArticleCard from '../ArticleCard/ArticleCard';
-import getArticles from '../../services/articleService';
+import getArticles from '../../services/getArticles';
 
 const ArticleList = ({ selectedTag }) => {
   // State to store articles fetched from the backend
@@ -34,6 +34,8 @@ const ArticleList = ({ selectedTag }) => {
   if (loading) {
     return <div>Loading articles...</div>; // Display a loading message while fetching
   }
+
+  
 
   return (
     <div className="container">

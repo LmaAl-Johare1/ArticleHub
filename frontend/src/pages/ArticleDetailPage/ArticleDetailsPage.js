@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
 import './ArticleDetailPage.css';
 import { likeArticle, unlikeArticle, createComment } from '../../services/reaction'; 
 
 const ArticlePage = () => {
-  const { id } = useParams(); // Get the article ID from the URL
-  const navigate = useNavigate(); // For navigation
-
+  const { id } = useParams(); 
+  const navigate = useNavigate(); 
+  
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
+
+  const state = useLocation();
+  console.log(state , "text");
 
   // Fetch article details and comments
   useEffect(() => {
@@ -21,11 +23,11 @@ const ArticlePage = () => {
       // Simulating a backend call
       const articleData = {
         id: id,
-        title: `Article ${id}`,
-        author: 'Author Name',
-        publishedDate: 'March 10, 2023',
-        tags: ['Technology', 'Science'],
-        body: `This is the content of the article with ID: ${id}.`,
+        title: state.title,
+        author: state.author,
+        publishedDate: state.created,
+        tags: state.tags,
+        body: state.body,
       };
 
       const commentData = [

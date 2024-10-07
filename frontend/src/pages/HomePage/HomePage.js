@@ -7,7 +7,8 @@ import TagList from '../../components/TagList/TagList';
 import ArticleList from '../../components/ArticleList/ArticleList';
 import Pagination from '../../components/Pagination/Pagination';
 import ArticleModal from '../CreateArticlePage/CreateArticlePage(Popup)';
-import Footer from '../../components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
+
 
 function HomePage() {
   // Modal state and handlers
@@ -19,19 +20,31 @@ function HomePage() {
   // State to store the selected tag for filtering articles
   const [selectedTag, setSelectedTag] = useState('All');
 
+   // State to store search results
+   const [searchResults, setSearchResults] = useState([]);
+
+   // State to store articles (if fetched without search)
+  const [articles, setArticles] = useState([]); // The default articles list
+
   // Function to handle tag selection
-  const handleTagChange = (tag) => setSelectedTag(tag);
+  const handleTagChange = (tag) => {
+    setSelectedTag(tag);
+    setSearchResults([]); // Clear search results when a tag is selected
+  };
+
+  
+  // Determine the articles to be shown (either search results or based on selected tag)
+  const displayedArticles = searchResults.length > 0 ? searchResults : articles;
 
   return (
     <div>
       <Header />
 
       <div className="container mt-4">
-        <div className="row mb-4">
-          <div className="col-12">
-            <SearchBar />
-          </div>
-        </div>
+      <div>
+      <SearchBar onSearchResults={(results) => setSearchResults(results)} />
+      <ArticleList articles={searchResults} />
+    </div>
 
         <div className="row mb-4">
           <div className="col-12">
@@ -47,7 +60,7 @@ function HomePage() {
 
         <div className="row mb-4">
           <div className="col-12">
-            <ArticleList selectedTag={selectedTag} />
+            <ArticleList articles={displayedArticles} />
           </div>
         </div>
 
@@ -57,7 +70,11 @@ function HomePage() {
           </div>
         </div>
 
-        <ArticleModal show={isModalOpen} handleClose={handleCloseModal} />
+        {/* Only show modal when isModalOpen is true */}
+        {isModalOpen && <ArticleModal show={isModalOpen} handleClose={handleCloseModal} />}
+        
+      
+        
       </div>
     </div>
     
