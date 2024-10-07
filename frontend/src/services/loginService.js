@@ -1,7 +1,7 @@
 import axios from 'axios';
 const baseUrl="http://localhost:50001/api"
 
-export default function loginBtnClicked()
+export default function loginBtnClicked(navigate)
 
     {
      
@@ -18,6 +18,8 @@ export default function loginBtnClicked()
            localStorage.setItem("token",response.data.token)
            localStorage.setItem("user",JSON.stringify(response.data.user))
            console.log(response.data.token)
+           navigate('/homepage');
+
 
         }).catch((error)=>{
           const message=error.response.data.message

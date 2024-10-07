@@ -19,7 +19,7 @@ namespace Data.IRepositories
         Task<bool> IsLikedAsync(int UserId, int articleId);
         Task<Article> GetArticleAsync(string slug);
         Task AddCommentAsync(ArticleComment comment);
-        Task<IEnumerable<Article>> GetArticlesAsync(int offset, string keyword, string tag);
+        Task<List<Article>> GetArticlesAsync(int offset, string keyword, string tag);
 
         Task<List<ArticleComment>> GetCommentsByArticleIdAsync(int articleId);
 

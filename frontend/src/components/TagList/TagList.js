@@ -9,14 +9,22 @@ const TagList = ({ onTagClick, onCreateClick }) => {
   // Function to handle tag selection
   const handleTagClick = async (tag) => {
     setActiveTag(tag); // Update the active tag
+  
     try {
       // Fetch articles based on the clicked tag
       const articlesData = await tagClickOn(tag);
-      onTagClick(articlesData); // Notify parent component of the selected tag and articles data
+  
+      if (articlesData) {
+        onTagClick(articlesData); // Notify parent component of the selected tag and articles data
+        console.log('Articles Data:', articlesData);
+      } else {
+        console.log('No articles found for the selected tag.');
+      }
     } catch (error) {
       console.error('Error fetching articles for selected tag:', error);
     }
   };
+
 
   return (
     <div className="container mt-4">

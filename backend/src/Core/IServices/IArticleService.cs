@@ -11,7 +11,7 @@ namespace Core.IServices
         Task<ArticleDto> GetArticleByIdAsync(int articleId);
         Task<bool> LikeArticleAsync(string slug);
         Task<bool> UnLikeArticleAsync(string slug);
-        Task<IEnumerable<ArticleCardDto>> GetArticlesAsync(ArticlesSearchDto articlesSearch);
+        Task<List<ArticleCardDto>> GetArticlesAsync(ArticlesSearchDto articlesSearch);
         Task<bool> DeleteArticleAsync(int articleId, string username);
 
         Task<ArticleCommentDto> AddCommentToArticleAsync(int articleId, ArticleCommentDto commentDto, string username);

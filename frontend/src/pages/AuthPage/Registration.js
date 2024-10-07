@@ -1,8 +1,13 @@
 import registerBtnClicked from '../../services/registerService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Registration.module.css';
+import { useNavigate } from 'react-router-dom';
 
 function Registration() {
+  const navigate = useNavigate();  
+  const handleRegisterClick = () => {
+    registerBtnClicked(navigate);
+  };
   return (
     <div className={`${styles.Registration}  d-flex justify-content-center align-items-center`}>
       <div className="col-12 col-md-8 col-lg-6 p-4 bg-light rounded shadow">
@@ -49,7 +54,7 @@ function Registration() {
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
           className="form-control mb-3"
         />
-        <button className="btn btn-success w-100" onClick={registerBtnClicked}>
+        <button className="btn btn-success w-100"  onClick={handleRegisterClick}>
           Sign Up
         </button>
       </div>

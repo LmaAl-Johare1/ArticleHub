@@ -251,14 +251,21 @@ namespace Core.Services
         /// </summary>
         /// <param name="searchDto">The search criteria.</param>
         /// <returns>A task that represents the asynchronous operation, with a collection of <see cref="ArticleCardDto"/> as the result.</returns>
-        public async Task<IEnumerable<ArticleCardDto>> GetArticlesAsync(ArticlesSearchDto searchDto)
+        public async Task<List<ArticleCardDto>> GetArticlesAsync(ArticlesSearchDto searchDto)
         {
             var articles = await _articleRepository.GetArticlesAsync(searchDto.Offset, searchDto.keyword, searchDto.tag);
 
             if (!articles.Any())
-                return Enumerable.Empty<ArticleCardDto>();
+                return null;
 
-            return articles.Select(a => _mapper.Map<ArticleCardDto>(a));
+            var articlesDto = new List<ArticleCardDto>();
+            foreach (var article in articles)
+            {
+                var articleToReturn = _mapper.Map<ArticleCardDto>(article);
+
+                articlesDto.Add(articleToReturn);
+            }
+            return    articlesDto;
         }
 
         /// <summary>

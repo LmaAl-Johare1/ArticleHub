@@ -27,8 +27,9 @@ function HomePage() {
   const [articles, setArticles] = useState([]); // The default articles list
 
   // Function to handle tag selection
-  const handleTagChange = (tag) => {
-    setSelectedTag(tag);
+  const handleTagChange = (articlesData) => {
+    console.log(articlesData+'TEST');
+    setSelectedTag(articlesData);
     setSearchResults([]); // Clear search results when a tag is selected
   };
 
@@ -46,7 +47,7 @@ function HomePage() {
       <ArticleList articles={searchResults} />
     </div>
 
-        <div className="row mb-4">
+       <div className="row mb-4">
           <div className="col-12">
             <FeaturedArticle />
           </div>

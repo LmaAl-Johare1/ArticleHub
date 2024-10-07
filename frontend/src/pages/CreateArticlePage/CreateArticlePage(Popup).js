@@ -40,9 +40,8 @@ const ArticleModal = ({ show, handleClose }) => {
       handleClose(); // Close the modal on success
     } catch (error) {
       console.error("Error submitting article:", error.message);
-      alert("Failed to create article. Please try again.");
     } finally {
-      setLoading(false);
+      handleClose(); // Close the modal on success
     }
   };
 

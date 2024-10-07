@@ -3,8 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import styles from './Header.module.css';
 import logo from '../../images/logo-no-background.png';
 import loginBtnClicked from '../../services/loginService';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
+  const navigate = useNavigate();  
+  const handleloginClick = () => {
+    loginBtnClicked(navigate);
+  };
   return (
     <div className={styles.Header}>
       <div className={`${styles['logo-box']} col-12 col-md-6 text-center text-md-start`}>
@@ -27,7 +32,7 @@ function Header() {
           className="form-control mx-2"
           style={{ width: '200px' }}
         />
-        <button className="btn btn-primary" onClick={loginBtnClicked}>
+        <button className="btn btn-primary" onClick={handleloginClick}>
           Login
         </button>
       </div>

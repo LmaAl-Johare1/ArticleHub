@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:5000/api'; 
+const baseUrl = 'http://localhost:50001/api'; 
 
 export default async function submitClicked(formData) {
   try {
@@ -13,7 +13,7 @@ export default async function submitClicked(formData) {
     }
 
   
-    const url = `${baseUrl}/article`;
+    const url = `${baseUrl}/articles`;
 
     // Make the POST request to create the article
     const response = await axios.post(url, formData, {
