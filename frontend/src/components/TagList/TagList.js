@@ -12,7 +12,7 @@ const TagList = ({ onTagClick, onCreateClick }) => {
     try {
       // Fetch articles based on the clicked tag
       const articlesData = await tagClickOn(tag);
-      onTagClick(articlesData); // Notify parent component (HomePage) of the selected tag and articles data
+      onTagClick(articlesData); // Notify parent component of the selected tag and articles data
     } catch (error) {
       console.error('Error fetching articles for selected tag:', error);
     }
@@ -27,7 +27,7 @@ const TagList = ({ onTagClick, onCreateClick }) => {
             <button
               key={tag}
               className={`btn tag-btn ${activeTag === tag ? 'active-tag' : ''}`}
-              onClick={() => handleTagClick(tag)} // Call handleTagClick when tag is clicked
+              onClick={() => handleTagClick(tag)} // Call handleTagClick when a tag is clicked
             >
               {tag}
             </button>
@@ -36,7 +36,7 @@ const TagList = ({ onTagClick, onCreateClick }) => {
 
         {/* Create Article Button */}
         <div className="col-12 col-md-4 d-flex justify-content-md-end">
-          <CreateArticleButton onClick={onCreateClick} />
+          <CreateArticleButton onClick={onCreateClick} /> {/* Call onCreateClick to open the modal */}
         </div>
       </div>
     </div>

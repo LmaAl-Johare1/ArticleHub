@@ -4,6 +4,7 @@ const baseUrl = 'http://localhost:5000/api';
 
 // Function to get articles by tag and/or page
 export default async function getArticles(tag = 'All', page = 1) {
+  const token = localStorage.getItem('token');
   try {
     
     const params = {};

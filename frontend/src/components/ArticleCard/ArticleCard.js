@@ -1,7 +1,7 @@
 import React from 'react';
 import './ArticleCard.css';
 import { useNavigate } from 'react-router-dom';
-import getArticleById from '../../services/articleService';
+import getArticleById from '../../services/getArticleById';
 
 const ArticleCard = ({ id, image, title, content }) => {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ const ArticleCard = ({ id, image, title, content }) => {
     try {
       const articleData = await getArticleById(id); 
       console.log(articleData); 
-      navigate(`/article/${id}`); 
+      navigate(`/article/${id}`,{state:articleData }); 
     } catch (error) {
       console.error('Error while fetching the article:', error);
     }

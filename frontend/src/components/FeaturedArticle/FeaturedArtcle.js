@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './FeaturedArticle.css';
 import { useNavigate } from 'react-router-dom';
-import getFeaturedArticle from '../../services/articleService'; // Import the getFeaturedArticle function
+import getFeaturedArticle from '../../services/getFeaturedArticle'; // Import the getFeaturedArticle function
 
 const FeaturedArticle = () => {
   const [featuredArticle, setFeaturedArticle] = useState(null);

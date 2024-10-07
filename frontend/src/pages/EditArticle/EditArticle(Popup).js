@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './EditArticle.css';
-import updateArticleClicked from '../../services/articleService';
+import updateArticleClicked from '../../services/updateArticleClicked';
 
 const EditArticleModal = ({ show, handleClose, articleData }) => {
   const availableTags = [
