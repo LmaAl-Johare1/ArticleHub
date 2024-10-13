@@ -2,6 +2,7 @@
 using Core.IServices;
 using Core.Models;
 using Core.Utils;
+using Data.DbContexts;
 using Data.Entities;
 using Data.IRepositories;
 using Microsoft.AspNetCore.Http;
@@ -24,6 +25,7 @@ namespace Core.Services
         private readonly IFileService _fileService;
         private readonly IUserRepository _userRepository;
         private readonly ITagRepository _tagRepository;
+        private readonly ArticleHubDbContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArticleService"/> class.
@@ -262,10 +264,31 @@ namespace Core.Services
             foreach (var article in articles)
             {
                 var articleToReturn = _mapper.Map<ArticleCardDto>(article);
-
                 articlesDto.Add(articleToReturn);
             }
-            return    articlesDto;
+            return articlesDto;
+        }
+        public async Task<int> GetTotalArticlesCount(string keyword, string tag)
+        {
+            var query = _context.article?.AsQueryable();
+
+            if (query == null)
+            {
+                // Handle the error appropriately
+                Console.WriteLine("article not foud");
+            }
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(a => a.title.Contains(keyword) || a.body.Contains(keyword));
+            }
+
+            if (!string.IsNullOrEmpty(tag))
+            {
+                query = query.Where(a => a.article_tags.Any(at => at.tag.name == tag));
+            }
+
+            return await query.CountAsync(); // Return the count of filtered articles
         }
 
         /// <summary>

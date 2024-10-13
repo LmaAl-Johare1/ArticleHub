@@ -68,6 +68,7 @@ namespace Data.DbContexts
         /// <param name="modelBuilder">The model builder used to configure the model.</param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             modelBuilder.Entity<Article>(a =>
             {
                 a.HasKey(a => a.id);

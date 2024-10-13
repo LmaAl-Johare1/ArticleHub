@@ -1,87 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import './ArticleList.css'; 
-import ArticleCard from '../ArticleCard/ArticleCard';
-import getArticles from '../../services/getArticles';
+import React from 'react';
+import './ArticleList.css';
+import { Card, Button, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
-const ArticleList = ({ selectedTag, keyword }) => {
-  const [articles, setArticles] = useState([]);  // Initialized as an empty array
-  const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    const fetchArticles = async () => {
-      setLoading(true);
-      try {
-        const data = await getArticles(selectedTag, currentPage, keyword);
-
-        // Ensure that the articles field exists in the response
-        if (data && data.articles) {
-          setArticles(data.articles);  // Set articles array
-          setTotalPages(data.totalPages || 1);  // Set totalPages if available, otherwise 1
-        } else {
-          setArticles([]);  // Set to empty array if no articles field
-        }
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-        setArticles([]);  // Fallback to an empty array in case of error
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticles();
-  }, [selectedTag, currentPage, keyword]);
-
-  // Page change handler
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
-  // Loading state handling
+const ArticleList = ({ articles, loading, error }) => {
+  // Show a loading spinner when articles are being fetched
   if (loading) {
-    return <div>Loading articles...</div>;
+    return (
+      <div className="d-flex justify-content-center my-5">
+        <Spinner animation="border" variant="primary" />
+      </div>
+    );
   }
 
-  return (
-    <div className="container">
-      <div className="row">
-        {articles && articles.length > 0 ? (
-          articles.map((article) => (
-            <div className="col-md-6 col-lg-4 mb-4" key={article.article_id}>
-              <ArticleCard
-                id={article.article_id}
-                image={article.image}
-                title={article.title}
-                content={article.body.slice(0, 50) + '...'}
-              />
-            </div>
-          ))
-        ) : (
-          <div>No articles found.</div>
-        )}
-      </div>
+  // Handle the case where no articles are found
+  if (error) {
+    return <p className="text-danger text-center mt-5">An error occurred while fetching articles. Please try again later.</p>;
+  }
 
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="row">
-          <div className="col-12 d-flex justify-content-center">
-            <nav aria-label="Page navigation">
-              <ul className="pagination">
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <li
-                    key={index + 1}
-                    className={`page-item ${index + 1 === currentPage ? 'active' : ''}`}
-                    onClick={() => handlePageChange(index + 1)}
-                  >
-                    <button className="page-link">{index + 1}</button>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          </div>
+  if (!articles || articles.length === 0) {
+    return <p className="text-center mt-5">No articles found. Please try again later.</p>;
+  }
+  
+  return (
+    <div className="row">
+      {articles.map((article) => (
+        <div key={article.id} className="col-md-4 col-sm-6 mb-4">
+          <Card className="shadow-sm h-100">
+            <Card.Img 
+              variant="top" 
+              src={article.image || "https://via.placeholder.com/300"} 
+              alt={article.title}
+            />
+            <Card.Body>
+              <Card.Title className="text-truncate">{article.title}</Card.Title>
+              <Card.Text className="article-body">
+                {article.body.length > 100 
+                  ? `${article.body.substring(0, 100)}...` 
+                  : article.body}
+              </Card.Text>
+              <Link to={`/articles/${article.id}`}>
+                <Button variant="primary">Read More</Button>
+              </Link>
+            </Card.Body>
+          </Card>
         </div>
-      )}
+      ))}
     </div>
   );
 };

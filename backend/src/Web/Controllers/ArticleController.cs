@@ -1,9 +1,11 @@
 ﻿using Core.IServices;
 using Core.Models;
 using Core.Services;
+using Data.DbContexts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,16 +25,19 @@ namespace Web.Controllers
     {
         private readonly IArticleService _articleService;
         private readonly ILogger<ArticleController> _logger;
+        private readonly ArticleHubDbContext _context;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ArticleController"/> class.
         /// </summary>
         /// <param name="articleService">Service for handling article operations.</param>
         /// <param name="logger">Logger for logging error or info messages.</param>
-        public ArticleController(IArticleService articleService, ILogger<ArticleController> logger)
+        public ArticleController(IArticleService articleService, ILogger<ArticleController> logger, ArticleHubDbContext context)
         {
             _articleService = articleService;
             _logger = logger;
+            _context = context ?? throw new ArgumentNullException(nameof(context));
+
         }
 
         /// <summary>
@@ -146,9 +151,12 @@ namespace Web.Controllers
 
             try
             {
+                // Assuming GetArticlesAsync handles filtering by tag and keyword
                 var articles = await _articleService.GetArticlesAsync(searchDto);
+                var totalArticlesCount = await _articleService.GetTotalArticlesCount(searchDto.keyword, searchDto.tag); // Fetch total count
+
                 if (!articles.Any()) return NotFound("No articles found.");
-                return Ok(articles);
+                return Ok(new { articles, totalCount = totalArticlesCount }); // Return articles and total count
             }
             catch (Exception ex)
             {
@@ -156,6 +164,8 @@ namespace Web.Controllers
                 return StatusCode(500, "An error occurred while fetching the articles.");
             }
         }
+
+      
 
         /// <summary>
         /// Adds a comment to an article.

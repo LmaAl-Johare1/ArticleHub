@@ -125,6 +125,7 @@ namespace Data.Repositories
             await _context.article_like.AddAsync(articleLike);
         }
 
+
         /// <summary>
         /// Unlikes an article.
         /// </summary>
@@ -155,31 +156,35 @@ namespace Data.Repositories
         /// <param name="tag">The tag to filter articles by.</param>
         /// <returns>A list of articles matching the filters.</returns>
         /// <exception cref="Exception">Thrown when there is an error retrieving articles.</exception>
+
         public async Task<List<Article>> GetArticlesAsync(int offset, string keyword, string tag)
         {
             try
             {
-                var query = _context.article
-                    
-                    .AsQueryable();
+                var query = _context.article.AsQueryable();
 
                 if (!string.IsNullOrEmpty(keyword))
                 {
                     query = query.Where(a => a.title.Contains(keyword) || a.body.Contains(keyword));
                 }
 
-                if (!string.IsNullOrEmpty(tag))
+                if (!string.IsNullOrEmpty(tag) && tag != "All")
                 {
                     query = query.Where(a => a.article_tags.Any(at => at.tag.name == tag));
                 }
 
-               var query1 = await query.Include(a => a.user)
-                    .Include(a => a.article_tags)
-                    .Include(a => a.article_likes).OrderBy(a => a.created)
-                             .Skip((offset - 1) * PageSize)
-                             .Take(PageSize).ToListAsync();
+            
 
-                return  query1;
+                var articles = await query
+                    .Include(a => a.user)
+                    .Include(a => a.article_tags)
+                    .Include(a => a.article_likes)
+                    .OrderBy(a => a.created)
+                    .Skip((offset - 1) * PageSize)
+                    .Take(PageSize)
+                    .ToListAsync();
+
+                return articles;
             }
             catch (Exception ex)
             {
@@ -187,6 +192,8 @@ namespace Data.Repositories
                 throw;
             }
         }
+           
+        
 
         /// <summary>
         /// Asynchronously adds a comment to an article.

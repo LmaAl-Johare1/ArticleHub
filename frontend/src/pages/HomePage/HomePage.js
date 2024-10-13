@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Header from '../../components/Header/Header';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -7,79 +7,88 @@ import TagList from '../../components/TagList/TagList';
 import ArticleList from '../../components/ArticleList/ArticleList';
 import Pagination from '../../components/Pagination/Pagination';
 import ArticleModal from '../CreateArticlePage/CreateArticlePage(Popup)';
-import { useNavigate } from 'react-router-dom';
-
+import tagClickOn from '../../services/tagClickOn';
 
 function HomePage() {
-  // Modal state and handlers
-  const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedTag, setSelectedTag] = useState('All');
+    const [articles, setArticles] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [articlesPerPage] = useState(6);
+    const [totalPages, setTotalPages] = useState(1);
 
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
+    const fetchArticles = useCallback(async (tag = 'All', page = 1) => {
+        setLoading(true);
+        const offset = page;
 
-  // State to store the selected tag for filtering articles
-  const [selectedTag, setSelectedTag] = useState('All');
-
-   // State to store search results
-   const [searchResults, setSearchResults] = useState([]);
-
-   // State to store articles (if fetched without search)
-  const [articles, setArticles] = useState([]); // The default articles list
-
-  // Function to handle tag selection
-  const handleTagChange = (articlesData) => {
-    console.log(articlesData+'TEST');
-    setSelectedTag(articlesData);
-    setSearchResults([]); // Clear search results when a tag is selected
-  };
-
-  
-  // Determine the articles to be shown (either search results or based on selected tag)
-  const displayedArticles = searchResults.length > 0 ? searchResults : articles;
-
-  return (
-    <div>
-      <Header />
-
-      <div className="container mt-4">
-      <div>
-      <SearchBar onSearchResults={(results) => setSearchResults(results)} />
-      <ArticleList articles={searchResults} />
-    </div>
-
-       <div className="row mb-4">
-          <div className="col-12">
-            <FeaturedArticle />
-          </div>
-        </div>
-
-        <div className="row mb-4">
-          <div className="col-12 d-flex justify-content-between align-items-center">
-            <TagList onTagClick={handleTagChange} onCreateClick={handleOpenModal} />
-          </div>
-        </div>
-
-        <div className="row mb-4">
-          <div className="col-12">
-            <ArticleList articles={displayedArticles} />
-          </div>
-        </div>
-
-        <div className="row mb-4">
-          <div className="col-12 d-flex justify-content-center">
-            <Pagination />
-          </div>
-        </div>
-
-        {/* Only show modal when isModalOpen is true */}
-        {isModalOpen && <ArticleModal show={isModalOpen} handleClose={handleCloseModal} />}
+        console.log(`Fetching articles for tag: '${tag}' on page: ${page}`);
         
-      
-        
-      </div>
-    </div>
-    
-  );
+        try {
+            const articlesData = await tagClickOn(tag, offset);
+            console.log(`Fetched articles:`, articlesData);
+            
+            setArticles(articlesData.articles);
+            setTotalPages(Math.ceil(articlesData.totalCount / articlesPerPage));
+        } catch (error) {
+            console.error('Error fetching articles:', error);
+        } finally {
+            setLoading(false);
+        }
+    }, [articlesPerPage]);
+
+    // Fetch articles whenever the tag or current page changes
+    useEffect(() => {
+        fetchArticles(selectedTag, currentPage);
+    }, [currentPage, selectedTag, fetchArticles]);
+
+    // Handle tag change and reset page to 1
+    const handleTagChange = async (tag) => {
+        setSelectedTag(tag);
+        setCurrentPage(1); // Reset to first page when tag changes
+    };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div>
+            <Header />
+            <div className="container mt-4">
+                <SearchBar />
+                <div className="row mb-4">
+                    <div className="col-12">
+                        <FeaturedArticle />
+                    </div>
+                </div>
+                <div className="row mb-4">
+                    <div className="col-12 d-flex justify-content-between align-items-center">
+                        <TagList 
+                            selectedTag={selectedTag} 
+                            onTagClick={handleTagChange} 
+                            onCreateClick={() => setIsModalOpen(true)} 
+                        />
+                    </div>
+                </div>
+                <div className="row mb-4">
+                    <div className="col-12">
+                        <ArticleList articles={articles} loading={loading} />
+                    </div>
+                </div>
+                <div className="row mb-4">
+                    <div className="col-12 d-flex justify-content-center">
+                        <Pagination 
+                            currentPage={currentPage}
+                            onPageChange={setCurrentPage} 
+                            totalPages={totalPages}
+                        />
+                    </div>
+                </div>
+                {isModalOpen && <ArticleModal show={isModalOpen} handleClose={() => setIsModalOpen(false)} />}
+            </div>
+        </div>
+    );
 }
 
 export default HomePage;

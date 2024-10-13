@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './SearchBar.css';
-import searchBtnClick from '../../services/searchBtnClick';
+import getArticles from '../../services/getArticles';
 
 const SearchBar = ({ onSearchResults }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -9,11 +9,10 @@ const SearchBar = ({ onSearchResults }) => {
   const handleSearch = async () => {
     setLoading(true);
     try {
-      const searchResults = await searchBtnClick(searchQuery); // Call the search function
-      onSearchResults(searchResults); // Send results to the parent component
+      const searchResults = await getArticles('All', 1, searchQuery);
+      onSearchResults(searchResults.articles);
     } catch (error) {
-      console.error('Error during search:', error);
-      alert('Failed to perform the search. Please try again.');
+      console.error('Search failed:', error);
     } finally {
       setLoading(false);
     }
@@ -24,7 +23,7 @@ const SearchBar = ({ onSearchResults }) => {
       <input
         type="text"
         className="search-input"
-        placeholder="Search by author, tag, or article title..."
+        placeholder="Search articles..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

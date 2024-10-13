@@ -1,35 +1,32 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:50001/api'; 
+const baseUrl = 'http://localhost:50001/api';
 
-// Function to get articles by tag, page, and keyword
-export default async function getArticles(tag = 'All', page = 1, keyword = '') {
-  const token = localStorage.getItem('token');
+export default async function getAllArticles(tag = 'All', offset = 1) {
   try {
-    // Set up query parameters dynamically based on the inputs
-    const params = {
-      offset: page,  // Assuming 'offset' is used for pagination, otherwise adjust as needed
-    };
-    
-    if (tag !== 'All') {
-      params.tag = tag;  // Only add tag if it's not the default "All"
-    }
-    
-    if (keyword) {
-      params.keyword = keyword;  // Add keyword only if provided
-    }
+      const token = localStorage.getItem('token');
 
-    // Perform the API request with parameters and token
-    const response = await axios.get(`${baseUrl}/articles`, {
-      params,  // Automatically converts the params object into query parameters
-      headers: {
-        'Authorization': `Bearer ${token}`,  // Include the token in the Authorization header
-      },
-    });
+      if (!token) {
+          alert('Please log in to view articles.');
+          return { articles: [], totalCount: 0 }; // Return an object
+      }
 
-    return response.data;  // Assuming response contains { articles, totalPages }
+      const params = { offset };
+
+      if (tag !== 'All') params.tag = tag;
+      
+      const response = await axios.get(`${baseUrl}/articles`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+          },
+          params,
+      });
+
+      console.log(`API Response:`, response.data);
+      return response.data; // Return both articles and totalCount
   } catch (error) {
-    console.error('Error fetching articles:', error);
-    throw error;
+      console.error('Error fetching articles:', error.response ? error.response.data : error.message);
+      return { articles: [], totalCount: 0 }; // Return an object
   }
 }

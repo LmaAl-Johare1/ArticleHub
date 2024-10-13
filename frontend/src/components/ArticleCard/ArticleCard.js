@@ -8,14 +8,16 @@ const ArticleCard = ({ id, image, title, content }) => {
 
   // Function to handle "Read More" click
   const handleReadMore = async () => {
+    console.log('Article ID:', id); // Check the ID
     try {
       const articleData = await getArticleById(id); 
       console.log(articleData); 
-      navigate(`/article/${id}`,{state:articleData }); 
+      navigate(`/article/${id}`, { state: articleData }); 
     } catch (error) {
       console.error('Error while fetching the article:', error);
     }
   };
+  
 
   return (
     <div className="article-card">

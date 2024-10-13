@@ -13,7 +13,7 @@ namespace Core.IServices
         Task<bool> UnLikeArticleAsync(string slug);
         Task<List<ArticleCardDto>> GetArticlesAsync(ArticlesSearchDto articlesSearch);
         Task<bool> DeleteArticleAsync(int articleId, string username);
-
+        Task<int>GetTotalArticlesCount(string keyword,string tag);
         Task<ArticleCommentDto> AddCommentToArticleAsync(int articleId, ArticleCommentDto commentDto, string username);
 
     }

@@ -6,38 +6,31 @@ const baseUrl = 'http://localhost:50001/api';
 export default async function getFeaturedArticle() {
   try {
     const token = localStorage.getItem('token');
-    
+
     if (!token) {
-      alert('Please log in to create an article.');
-      return;
+      alert('Please log in to view articles.');
+      return null;
     }
 
-    // Fetch all articles from the backend
     const response = await axios.get(`${baseUrl}/articles`, {
       headers: {
-        'Authorization': `Bearer ${token}`, 
-        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
     });
 
-    if (response.status === 200) {
-      const articles = response.data.articles; // Assuming the response contains an array of articles
+    const articles = response.data.articles || response.data; // Adjust according to your API response
 
-      // Safeguard: Ensure that `articles` exists and is an array
-      if (!Array.isArray(articles) || articles.length === 0) {
-        throw new Error('No articles found or invalid articles data');
-      }
-
-      // Find the article with the most likes
-      const featuredArticle = articles.reduce((max, article) => 
-        (article.likes > max.likes ? article : max), articles[0]);
-
-      return featuredArticle; // Return the article with the most likes
-    } else {
-      throw new Error('Failed to fetch articles');
+    if (!Array.isArray(articles) || articles.length === 0) {
+      throw new Error('No articles found or invalid articles data');
     }
+
+    const featuredArticle = articles.reduce((max, article) => 
+      (article.likes > max.likes ? article : max), articles[0]);
+
+    return featuredArticle;
   } catch (error) {
     console.error('Error fetching featured article:', error);
-    throw error;
+    return null; // Return null in case of an error
   }
 }

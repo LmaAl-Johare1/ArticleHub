@@ -7,6 +7,7 @@ import { likeArticle, unlikeArticle, createComment } from '../../services/reacti
 const ArticlePage = () => {
   const { id } = useParams(); 
   const navigate = useNavigate(); 
+  const location = useLocation(); // Use useLocation to access state
   
   const [article, setArticle] = useState(null);
   const [comments, setComments] = useState([]);
@@ -14,20 +15,19 @@ const ArticlePage = () => {
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
 
-  const state = useLocation();
-  console.log(state , "text");
+  // Access article data from location state
+  const { title, author, created, tags, body } = location.state || {};
 
   // Fetch article details and comments
   useEffect(() => {
-    const fetchArticleDetails = async () => {
-      // Simulating a backend call
+    const fetchArticleDetails = () => {
       const articleData = {
         id: id,
-        title: state.title,
-        author: state.author,
-        publishedDate: state.created,
-        tags: state.tags,
-        body: state.body,
+        title: title,
+        author: author,
+        publishedDate: created,
+        tags: tags,
+        body: body,
       };
 
       const commentData = [
@@ -41,7 +41,8 @@ const ArticlePage = () => {
     };
 
     fetchArticleDetails();
-  }, [id]);
+  }, [id, title, author, created, tags, body]);
+
 
   // Handle Like and Unlike functionality
   const handleLikeClick = async () => {
